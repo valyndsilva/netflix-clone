@@ -16,7 +16,11 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "@typescript-eslint/triple-slash-reference": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "import/no-duplicates": "off",
+  },
   settings: {
     react: {
       version: "detect",

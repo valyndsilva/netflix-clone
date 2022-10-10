@@ -1,15 +1,63 @@
-## Getting Started:
+# Getting Started:
 
-Create TypeScript Project with create-next-app using the --ts, --typescript flag like so:
+## Create TypeScript Project:
+
+Use create-next-app with the --ts, --typescript flag like so:
 
 ```
 npx create-next-app@latest --typescript project-name
+```
+
+## Setup Tailwind in your project:
+
+```
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm run dev
 ```
 
-To fix hydration UI mismatch issues, we need to wait until the component has mounted open pages/\_app.tsx:
+### Configure your template paths in your tailwind.config.js file content:
+
+```
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### Add the Tailwind directives to your CSS in ./styles/globals.css file:
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### Start your build process:
+
+```
+npm run dev
+```
+
+### Start using Tailwind’s utility classes to style your content. Ex:
+
+```
+    <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+
+```
+
+## Fix hydration UI mismatch issues:
+
+We need to wait until the component has mounted open pages/\_app.tsx:
 
 ```
 import "../styles/globals.css";
@@ -30,10 +78,11 @@ export default MyApp;
 
 ```
 
-Create a custom 'Document' file:
+## Create a custom 'Document' file:
+
 create \_document.js in pages folder and paste code from https://nextjs.org/docs/advanced-features/custom-document
 
-# Setting up Nextjs with typescript,eslint and prettier:
+## Setting up Nextjs with typescript, eslint, prettier and husky:
 
 ```
 npm install --save-dev eslint
@@ -83,7 +132,7 @@ module.exports = {
 
 ```
 
-Create a .prettierrc file with the following:
+### Create a .prettierrc file with the following:
 
 ```
 
@@ -96,13 +145,14 @@ Create a .prettierrc file with the following:
 
 ```
 
-Run prettier to reformat the files:
+### Run prettier to reformat the files:
 
 ```
 prettier --write .
 ```
 
-Create a .vscode folder in root directory and in it a settings.json file.
+### Create a .vscode folder in root directory and in it a settings.json file.
+
 In settings.json:
 
 ```
@@ -121,6 +171,8 @@ In settings.json:
 
 This tells eslint to fix any auto fixable problems when we hit save and the prettier runs after that and format the changes we made.
 
+### Setup Husky:
+
 Next we install husky to setup a pre git commit hooks. It checks 4 things:
 No Prettier warnings in the code
 No ESLint warnings in the code
@@ -137,6 +189,8 @@ npm install
 A .husky folder is created with a sample pre-commmit.json file
 
 In package.json we create 5 different scripts to test various things:
+
+```
 // Runs tsc command on cli and pretty print any warnings or errors that it produces
 "check-types": "tsc --pretty --noEmit",
 // asks prettier to check all the files excluding the ones in the prettierignore file for formatting issues.
@@ -147,6 +201,7 @@ In package.json we create 5 different scripts to test various things:
 "format": "prettier --write .",
 // test-all runs all commands above in sequence
 "test-all":"npm run check-format && npm run check-lint && npm run check-types && npm run build"
+```
 
 The package.json scripts will look like this:
 
@@ -206,6 +261,8 @@ npm run check-lint ||
     echo 'Your code passed all checks!!! Code is being commited now...';
 
 ```
+
+### Fix Common Errors:
 
 If you run into an error:
 The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/basic-features/eslint#migrating-existing-config
