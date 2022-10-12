@@ -48,7 +48,7 @@ function JumbotronItem({ item, direction, className }: Props) {
               />
             </div>
             <div className="jumbotron_animation">
-              {item.animationVideo && (
+              {item.animationVideo.length > 0 && (
                 <video
                   className="jumbotron_animationVideo h-full w-full"
                   autoPlay
@@ -59,18 +59,17 @@ function JumbotronItem({ item, direction, className }: Props) {
                   <source src={item.animationVideo} type="video/mp4" />
                 </video>
               )}
-              {item.animationImage && (
+              {item.animationImage.length > 0 && (
                 <div className="h-[100%] w-[20%] jumbotron_animationImage ">
                   <Image
                     src={item.animationImage}
                     alt={item.alt}
                     layout="fill"
                     objectFit="contain"
-                    className=""
                   />
                 </div>
               )}
-              {item.animationText1 && (
+              {item.animationText1.length > 0 && (
                 <div className="flex-grow-1 flex-shrink-1 my-1 mx-0 jumbotron_animationText">
                   <div className="font-semibold text-sm">
                     {item.animationText1}

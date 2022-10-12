@@ -1,8 +1,7 @@
 import React from "react";
 import { ChevronRight } from "@mui/icons-material";
-interface Props {}
 
-function OptForm({}: Props) {
+function OptForm() {
   return (
     <div className="flex flex-col md:flex-row items-center text-center justify-center flex-wrap h-full max-w-[950px] pt-3 mx-auto">
       <p className="text-white  mb-4 py-0 px-[10%] text-md md:text-lg">

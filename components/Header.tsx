@@ -3,9 +3,7 @@ import Link from "next/link";
 import React from "react";
 import OptForm from "./OptForm";
 
-interface Props {}
-
-function Header({}: Props) {
+function Header() {
   return (
     <div className="flex flex-col border-b-8 border-[#222] text-center py-36 px-10 z-10 w-[100vw] bg-home bg-cover bg-no-repeat bg-top-center">
       <div className="flex justify-between items-center z-[999] w-full h-20 py-0 px-9 fixed top-0 right-0 bg-gradient-to-t from-transparent to-black ">

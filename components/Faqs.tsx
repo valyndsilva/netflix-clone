@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import faqsData from "../json/faqs.json";
 import OptForm from "./OptForm";
 import Accordion from "./Accordion";
 
-interface Props {}
-
-function Faqs({}: Props) {
-  const [toggleShow, setToggleShow] = useState(false);
+function Faqs() {
   return (
     <div className="flex flex-col items-center justify-center border-b-8 border-[#222] pb-20">
       <div className="flex flex-col w-full max-w-5xl pt-16 px-5 md:px-11">

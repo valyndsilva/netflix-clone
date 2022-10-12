@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-interface Props {}
-
-function Footer({}: Props) {
+function Footer() {
   return (
     <div className="flex flex-col m-auto w-full max-w-5xl py-16 px-14 text-[#757575] ">
       <div className="text-[16px] mb-8">Questions? Call 0808 196 5391</div>
