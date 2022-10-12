@@ -5,7 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        home: "linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%), url('/home.jpeg')",
+      },
+    },
   },
   plugins: [],
 };

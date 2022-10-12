@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "className": "watchOnTV",
+    "title": "Enjoy on your TV.",
+    "subTitle": "Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.",
+    "image": "/tv.png",
+    "alt": "Tiger King on Netflix",
+    "animationVideo": "/videos/video-tv.m4v",
+    "animationImage": "",
+    "animationIcon": "",
+    "animationText1": "",
+    "animationText2": "",
+    "direction": "row"
+  },
+  {
+    "id": 2,
+    "className": "downloadAndWatch",
+    "title": "Download your programmes to watch offline.",
+    "subTitle": "Save your favourites easily and always have something to watch.",
+    "image": "/mobile-img.jpeg",
+    "alt": "Watch on mobile",
+    "animationVideo": "",
+    "animationImage": "/boxshot.png",
+    "animationIcon": "/download-icon.gif",
+    "animationText1": "Stranger Things",
+    "animationText2": "Downloading...",
+    "direction": "row-reverse"
+  },
+  {
+    "id": 3,
+    "className": "watchOnDevice",
+    "title": "Watch everywhere.",
+    "subTitle": "Stream unlimited films and TV programmes on your phone, tablet, laptop and TV without paying more.",
+    "image": "/device-pile.png",
+    "alt": "Money Heist on Netflix",
+    "animationVideo": "/videos/video-devices.m4v",
+    "animationImage": "",
+    "animationIcon": "",
+    "animationText1": "",
+    "animationText2": "",
+    "direction": "row"
+  },
+  {
+    "id": 4,
+    "className": "kidsValueProp",
+    "title": "Create profiles for children.",
+    "subTitle": "Send children on adventures with their favourite characters in a space made just for them – free with your membership.",
+    "image": "/children-profiles.png",
+    "alt": "Children Profiles on Netflix",
+    "animationVideo": "",
+    "animationImage": "",
+    "animationIcon": "",
+    "animationText1": "",
+    "animationText2": "",
+    "direction": "row-reverse"
+  }
+]

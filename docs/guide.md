@@ -40,6 +40,27 @@ module.exports = {
 @tailwind utilities;
 ```
 
+### Enable CSS Nesting:
+
+You need to install postcss-import via npm/yarn:
+
+```
+npm install postcss-import
+```
+
+Then change your postcss.config.js to:
+
+```
+module.exports = {
+    plugins: {
+        'postcss-import': {},
+        'tailwindcss/nesting': {},
+        tailwindcss: {},
+        autoprefixer: {},
+    }
+}
+```
+
 ### Start your build process:
 
 ```
@@ -53,6 +74,13 @@ npm run dev
       Hello world!
     </h1>
 
+```
+
+## Setup Material UI and Icons:
+
+```
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
 ```
 
 ## Fix hydration UI mismatch issues:

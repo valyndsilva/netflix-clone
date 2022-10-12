@@ -15,7 +15,12 @@
     "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.8",
     "next": "12.3.1",
+    "postcss-import": "^15.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -34,10 +39,10 @@
     "eslint-plugin-n": "^15.3.0",
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.9",
+    "husky": "^8.0.0",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.4",
-    "husky": "^8.0.0"
+    "typescript": "^4.8.4"
   }
 }

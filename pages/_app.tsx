@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
+import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // To fix hydration UI mismatch issues
@@ -10,7 +11,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMounted(true);
   }, []);
   if (!mounted) return null;
-  return <Component {...pageProps} />;
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
 export default MyApp;
