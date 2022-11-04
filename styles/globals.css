@@ -14,14 +14,10 @@
 
   html,
   body {
-    color: #333;
+    background-color: #141414;
+    color: white;
     font-size: 16px;
     direction: ltr;
-  }
-
-  body {
-    background-color: #000;
-    color: white;
   }
 
   a {
@@ -55,6 +51,26 @@
   }
 }
 @layer components {
+  .navbar {
+    background-color: transparent;
+  }
+  .navbar .active {
+    background-color: #000;
+  }
+
+  #hideMeAfter10Seconds {
+    animation: hideAnimation 0s ease-in 8s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes hideAnimation {
+    to {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+  }
+
   .jumbotronItem .jumbotron_animation {
     width: 100%;
     height: 100%;
@@ -169,5 +185,126 @@
   .jumbotronItem .kidsValueProp {
     flex-direction: row-reverse;
     margin-left: 5%;
+  }
+
+  .spinner {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 999;
+  }
+
+  .spinner :after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-image: url(/spinner.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: -75px;
+    margin-left: -75px;
+    width: 150px;
+    height: 150px;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  @-ms-keyframes spin {
+    from {
+      -ms-transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes spin {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rowItem {
+    cursor: pointer;
+    width: 198px;
+    height: 118px;
+    margin-right: 5px;
+    overflow: hidden;
+    background-color: #181818;
+    &:hover {
+      width: 296px;
+      height: 312px;
+      position: absolute;
+      top: -180px;
+      -webkit-box-shadow: 0 2px 15px 0px rgb(255, 255, 255, 0.07);
+      box-shadow: 0 2px 15px 0px rgb(255, 255, 255, 0.07);
+      border-radius: 5px;
+      img {
+        z-index: 1;
+        height: 140px;
+      }
+      .video {
+        background-color: transparent;
+        z-index: 2;
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  .bottomFade {
+    background-image: linear-gradient(
+      180deg,
+      transparent,
+      rgba(37, 37, 37, 0.61),
+      #111
+    );
+  }
+
+  .fontStyle {
+    -webkit-text-stroke: 5px #7c7c7c;
+    -webkit-text-fill-color: #000;
+  }
+  /* MUI Menu */
+  .menu {
+    @apply md:hidden w-full ;
+  }
+
+  .menu .MuiPaper-root {
+    @apply w-full  !rounded-md !border !border-[gray] !bg-black !text-white;
+  }
+
+  .menu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .menu .MuiMenuItem-root {
+    @apply !block w-full !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100F];
   }
 }

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 
 interface Props {
   direction: string;
@@ -22,7 +22,7 @@ interface Props {
 
 function JumbotronItem({ item, direction, className }: Props) {
   return (
-    <div className="flex flex-col lg:flex-row overflow-hidden border-b-8 border-[#222] py-28 px-[5%] relative jumbotronItem ">
+    <div className="flex flex-col lg:flex-row overflow-hidden border-b-8 border-[#222] py-28 px-[5%] jumbotronItem ">
       <div
         className={`${className} flex items-center justify-between max-w-[1100px] my-0 mx-auto flex-col md:flex-${direction} `}
         key={item.id}
@@ -36,9 +36,9 @@ function JumbotronItem({ item, direction, className }: Props) {
           </h2>
         </div>
 
-        <div className="w-full md:w-1/2  border-box  h-full relative ">
+        <div className="w-full md:w-1/2  border-box  h-full relative z-10">
           <div className="jumbotron_animationContainer mt-[-10%] mr-[-5%] mb-[-5%] ml-0 h-[100%] ">
-            <div className="relative max-w-full z-20 h-[400px]">
+            <div className="relative max-w-full h-[400px] z-20">
               <Image
                 src={item.image}
                 alt={item.alt}

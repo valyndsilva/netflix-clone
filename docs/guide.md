@@ -325,3 +325,620 @@ When you run npm run build you might receive an error like:
 rror occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
 FetchError: invalid json response body at http://localhost:3000/api/getHero reason: Unexpected token < in JSON at position 0
 If this happens switch from ISR to SSR in index.tsx.
+
+Setup axiosClient in lib/axiosClient.tsx:
+
+```
+npm install axios query-string
+```
+
+Authenticated server-side rendering with Next.js and Firebase Authentication
+https://colinhacks.com/essays/nextjs-firebase-authentication
+A collection of cookie helpers for Next.js:
+
+```
+npm install nookies
+```
+
+https://firebase.google.com/docs/admin/setup
+
+```
+npm install firebase-admin
+```
+
+## Implement Authentication in NextJs with Firebase:
+
+https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/
+
+In .env.local add:
+
+```
+NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY=<YOUR_API_KEY>
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=<YOUR_DOMAIN>
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=<YOUR_PROJECT_ID>
+```
+
+Next, create a firebase config instance in lib/firbaseConfig.tsx:
+
+```
+import firebase from "firebase/compat/app";
+import "firebase/auth";
+
+const FirebaseCredentials = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+};
+// if a Firebase instance doesn't exist, create one
+if (!firebase.apps.length) {
+  firebase.initializeApp(FirebaseCredentials);
+}
+
+export default firebase;
+
+
+```
+
+Listening for Firebase changes In lib/useFirebaseAuth.tsx:
+
+```
+import { useState, useEffect } from "react";
+import firebase from "./firebaseConfig";
+
+const formatAuthUser = (user) => ({
+  uid: user.uid,
+  email: user.email,
+});
+
+export default function useFirebaseAuth() {
+  const [authUser, setAuthUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const authStateChanged = async (authState) => {
+    if (!authState) {
+      setAuthUser(null);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    var formattedUser = formatAuthUser(authState);
+    setAuthUser(formattedUser);
+    setLoading(false);
+  };
+
+  // listen for Firebase state change
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(authStateChanged);
+    return () => unsubscribe();
+  }, []);
+
+  return {
+    authUser,
+    loading,
+  };
+}
+
+```
+
+Then create a new use Context in context/AuthUserContext:
+
+```
+import { createContext, useContext, Context } from "react";
+import useFirebaseAuth from "../lib/useFirebaseAuth";
+
+export const AuthUserContext = createContext({
+  authUser: null,
+  loading: true,
+});
+
+export function AuthUserProvider({ children }) {
+  const auth = useFirebaseAuth();
+  return (
+    <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
+  );
+}
+// // custom hook to use the authUserContext and access authUser and loading
+// export const useAuth = () => useContext(AuthUserContext);
+
+```
+
+Create a custom hook to access the context value in hooks/useAuth.tsx:
+
+```
+import { useContext } from "react";
+import { AuthUserContext } from "../context/AuthUserContext";
+
+// custom hook to use the AuthUserContext and access authUser and loading
+export const useAuth = () => useContext(AuthUserContext);
+
+```
+
+Then, in our \_app.js, wrap this provider around your application. This ensures that the children components will be able to access your user context:
+
+```
+import React from "react";
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { useEffect, useState } from "react";
+import Layout from "../components/Layout";
+import { AuthUserProvider } from "../context/AuthUserContext";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  // To fix hydration UI mismatch issues
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
+  return (
+    <AuthUserProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+    </AuthUserProvider>
+  );
+}
+
+export default MyApp;
+
+```
+
+Creating protected routes:
+Protected routes are pages or sections of your app that should only be accessed by certain users. In this case, only logged-in users should access this content. To set this up, get the authUser and loading from your custom useAuth() hook. With these variables in place, check if Firebase is still fetching data (i.e., loading is true), and, if not, whether authUser is null. If that is the case, then the user isn’t logged in and you should redirect them to the login page.
+
+Create a new page loggedIn.tsx:
+
+```
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "../hooks/useAuth";
+
+const LoggedIn = () => {
+  const { authUser, loading } = useAuth();
+  const router = useRouter();
+
+  // Listen for changes on loading and authUser, redirect if needed
+  useEffect(() => {
+    if (!loading && !authUser) router.push("/");
+  }, [authUser, loading]);
+
+  return (
+    //Your logged in page
+    <h1>I'm Logged In!</h1>
+  );
+};
+
+export default LoggedIn;
+
+```
+
+Adding login, sign-up, and sign-out functionalities in Next.js:
+In lib/useFirebaseAuth.tsx we can add many built-in functions for signing in, creating users, and signing out.
+We use firebase.auth() to access the different functions (signInWithEmailAndPassword, createUserWithEmailAndPassword, and signOut).
+
+The updated useFirebaseAuth.tsx will look like:
+
+```
+import { useState, useEffect } from "react";
+import firebase from "./firebaseConfig";
+
+const formatAuthUser = (user) => ({
+  uid: user.uid,
+  email: user.email,
+});
+
+export default function useFirebaseAuth() {
+  const [authUser, setAuthUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const authStateChanged = async (authState) => {
+    if (!authState) {
+      setAuthUser(null);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    var formattedUser = formatAuthUser(authState);
+    setAuthUser(formattedUser);
+    setLoading(false);
+  };
+
+  const clear = () => {
+    setAuthUser(null);
+    setLoading(true);
+  };
+
+  const signInWithEmailAndPassword = (email, password) =>
+    firebase.auth().signInWithEmailAndPassword(email, password);
+
+  const createUserWithEmailAndPassword = (email, password) =>
+    firebase.auth().createUserWithEmailAndPassword(email, password);
+
+  const signOut = () => firebase.auth().signOut().then(clear);
+
+  // listen for Firebase state change
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(authStateChanged);
+    return () => unsubscribe();
+  }, []);
+
+  return {
+    authUser,
+    loading,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+  };
+}
+
+```
+
+Next, update the default value in your context file.
+
+```
+import { createContext, useContext, Context } from "react";
+import useFirebaseAuth from "../lib/useFirebaseAuth";
+
+export const AuthUserContext = createContext({
+  authUser: null,
+  loading: true,
+  signInWithEmailAndPassword: async () => {},
+  createUserWithEmailAndPassword: async () => {},
+  signOut: async () => {},
+});
+
+export function AuthUserProvider({ children }) {
+  const auth = useFirebaseAuth();
+  return (
+    <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
+  );
+}
+```
+
+Creating the sign-up page:
+In your sign-up page, use your useAuth hook to retrieve your function for creating a user once again. createUserWithEmailAndPassword takes two parameters: email and password.
+
+After finishing form validation, call this function. If it returns successfully with an authUser, then you can redirect the user accordingly.
+
+Create a SignUp.tsx component:
+
+```
+import React, { useState } from "react";
+import { auth } from "../lib/firebaseClient";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useRouter } from "next/router.js";
+import Link from "next/link.js";
+import Header1 from "./Header1";
+import { useAuth } from "../hooks/useAuth";
+
+export default function SignUp() {
+  //   const router = useRouter();
+  //   const [firstName, setFirstName] = useState("");
+  //   const [emailAddress, setEmailAddress] = useState("");
+  //   const [password, setPassword] = useState("");
+  //   const [error, setError] = useState(null);
+
+  //   // check form input elements are valid
+  //   const isInvalid = firstName === "" || password === "" || emailAddress === "";
+
+  //   const handleSignUp = (event) => {
+  //     event.preventDefault();
+
+  //     createUserWithEmailAndPassword(auth, emailAddress, password)
+  //       .then(() => {
+  //         updateProfile(auth.currentUser, {
+  //           displayName: firstName,
+  //           photoURL: Math.floor(Math.random() * 5) + 1,
+  //         }).then(() => {
+  //           router.push("/browse");
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         setFirstName("");
+  //         setEmailAddress("");
+  //         setPassword("");
+  //         setError(error.message);
+  //       });
+  //   };
+
+  const router = useRouter();
+
+  const [firstName, setFirstName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
+  const [error, setError] = useState(null);
+
+  // check form input elements are valid
+  const isInvalid =
+    firstName === "" ||
+    passwordOne === "" ||
+    passwordTwo === "" ||
+    emailAddress === "";
+
+  const { createUserWithEmailAndPassword } = useAuth();
+
+  const handleSignUp = (event) => {
+    setError(null);
+    //check if passwords match. If they do, create user in Firebase
+    // and redirect to your logged in page.
+    if (passwordOne === passwordTwo)
+      createUserWithEmailAndPassword(emailAddress, passwordOne)
+        .then((authUser) => {
+          console.log("Success. The user is created in Firebase");
+          router.push("/logged_in");
+        })
+        .catch((error) => {
+          // An error occurred. Set error message to be displayed to user
+          setError(error.message);
+        });
+    else setError("Password do not match");
+    event.preventDefault();
+  };
+
+  return (
+    <>
+      <Header1>
+        <div className="flex flex-col min-h-[560px] bg-black/75 rounded-md box-border w-full max-w-[450px] pt-16 px-16 pb-10 m-auto mb-24">
+          <h1 className="text-white text-3xl font-bold mb-7">Sign Up</h1>
+          {/* {!error && <Form.Error>I'm an error!</Form.Error>} */}
+          {error && (
+            <div className="bg-[#e87c03] rounded-md text-sm my-4 mx-0 text-white p-4 px-5">
+              {error}
+            </div>
+          )}
+          <form
+            className="flex flex-col max-w-[450px] w-full"
+            onSubmit={handleSignUp}
+            method="POST"
+          >
+            <input
+              type="text"
+              className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+              placeholder="First name"
+              value={firstName}
+              onChange={({ target }) => setFirstName(target.value)}
+            />
+            <input
+              type="email"
+              className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+              placeholder="Email address"
+              value={emailAddress}
+              onChange={({ target }) => setEmailAddress(target.value)}
+            />
+            <input
+              type="password"
+              className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+              placeholder="PasswordOne"
+              value={passwordOne}
+              onChange={({ target }) => setPasswordOne(target.value)}
+              autoComplete="off"
+            />
+            <input
+              type="password"
+              className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+              placeholder="PasswordTwo"
+              value={passwordTwo}
+              onChange={({ target }) => setPasswordTwo(target.value)}
+              autoComplete="off"
+            />
+            <button
+              className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
+              disabled={isInvalid}
+              type="submit"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <p className="text-[#737373] text-left text-md font-medium">
+            Already a user?{" "}
+            <Link href="/login" className="no-underline hover:underline">
+              <span className="text-white cursor-pointer"> Sign in now.</span>
+            </Link>
+          </p>
+          <p className="mt-2 text-sm text-left text-[#8c8c8c]">
+            This page is protected by Google reCAPTCHA to ensure you're not a
+            bot. Learn more.
+          </p>
+        </div>
+      </Header1>
+    </>
+  );
+}
+
+```
+
+Next, create a signup.tsx page:
+
+```
+import React from "react";
+import { Footer, SignUp } from "../components";
+
+function signup() {
+  return (
+    <div>
+      <SignUp />
+      <Footer />
+    </div>
+  );
+}
+
+export default signup;
+
+```
+
+Adding a sign-out button:
+Signing out is also very straightforward. Grab the signOut() function from useAuth() and add it to a button or a link.
+Ex: In pages/loggedIn.tsx:
+
+```
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "../hooks/useAuth";
+
+// import { Container, Row, Col } from "reactstrap";
+
+const LoggedIn = () => {
+  const { authUser, loading, signOut } = useAuth();
+  const router = useRouter();
+
+  // Listen for changes on loading and authUser, redirect if needed
+  useEffect(() => {
+    if (!loading && !authUser) router.push("/");
+  }, [authUser, loading]);
+
+  return (
+    //Your logged in page
+    <div>
+      <h1>I'm Logged In!</h1>
+      <button onClick={signOut}>Sign out</button>
+    </div>
+  );
+};
+
+export default LoggedIn;
+
+```
+
+Creating a login page:
+Retrieve signInWithEmailAndPassword() from useAuth() and pass in the user’s email and password. If they are correct, redirect the user, and, if not, display the correct error message.
+
+Create a Login.tsx component:
+
+```
+import Link from "next/link";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { auth } from "../lib/firebaseClient";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Header1 from "./Header1";
+import { useAuth } from "../hooks/useAuth";
+
+function Login() {
+  //   const router = useRouter();
+  //   const [emailAddress, setEmailAddress] = useState("");
+  //   const [password, setPassword] = useState("");
+  //   const [error, setError] = useState("");
+
+  //   // check form input elements are valid
+  //   const isInvalid = password === "" || emailAddress === "";
+
+  //   const handleSignIn = (event) => {
+  //     event.preventDefault();
+
+  //     signInWithEmailAndPassword(auth, emailAddress, password)
+  //       .then(() => {
+  //         // push to the browse page
+  //         router.push("/browse");
+  //       })
+  //       .catch((error) => {
+  //         setEmailAddress("");
+  //         setPassword("");
+  //         setError(error.message);
+  //       });
+  //   };
+
+  const router = useRouter();
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // check form input elements are valid
+  const isInvalid = password === "" || emailAddress === "";
+
+  const { signInWithEmailAndPassword } = useAuth();
+
+  const handleSignIn = (event) => {
+    setError(null);
+    signInWithEmailAndPassword(emailAddress, password)
+      .then((authUser) => {
+        router.push("/logged_in");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+    event.preventDefault();
+  };
+  return (
+    <Header1>
+      <div className="flex flex-col min-h-[560px] bg-black/75 rounded-md box-border w-full max-w-[450px] pt-16 px-16 pb-10 m-auto mb-24">
+        <h1 className="text-white text-3xl font-bold mb-7">Sign In</h1>
+        {/* {!error && <Form.Error>I'm an error!</Form.Error>} */}
+        {error && (
+          <div className="bg-[#e87c03] rounded-md text-sm my-4 mx-0 text-white p-4 px-5">
+            {error}
+          </div>
+        )}
+        <form
+          className="flex flex-col max-w-[450px] w-full"
+          onSubmit={handleSignIn}
+          method="POST"
+        >
+          <input
+            type="email"
+            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+            placeholder="Email address"
+            value={emailAddress}
+            onChange={({ target }) => setEmailAddress(target.value)}
+          />
+          <input
+            type="password"
+            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+            placeholder="Password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+            autoComplete="off"
+          />
+          <button
+            className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
+            disabled={isInvalid}
+            type="submit"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <p className="text-[#737373] text-left text-md font-medium">
+          New to Netflix?
+          <Link href="/signup" className="no-underline hover:underline">
+            <span className="text-white cursor-pointer"> Sign up now.</span>
+          </Link>
+        </p>
+        <p className="mt-2 text-sm text-left text-[#8c8c8c]">
+          This page is protected by Google reCAPTCHA to ensure you're not a bot.
+          Learn more.
+        </p>
+      </div>
+    </Header1>
+  );
+}
+
+export default Login;
+
+```
+
+Next, create a login.tsx page:
+
+```
+import React from "react";
+import { Footer, Login } from "../components";
+
+interface Props {};
+
+function login({}: Props) {
+  return (
+    <div>
+      <Login />
+      <Footer />
+    </div>
+  );
+}
+
+export default login;
+
+```
+
+https://stackoverflow.com/questions/71193348/firebase-storage-access-to-fetch-at-has-been-blocked-by-cors-policy-no-ac
