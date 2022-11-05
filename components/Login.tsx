@@ -7,8 +7,10 @@ import { AuthContext } from "../context/AuthContext";
 import {
   DASHBOARD_PAGE_PATH,
   HOME_PAGE_PATH,
+  RESET_PAGE_PATH,
   SIGN_UP_PAGE_PATH,
 } from "../config/paths";
+import { useSubscription } from "../hooks";
 
 interface LoginData {
   email: string;
@@ -32,16 +34,14 @@ function Login() {
 
   // check form input elements are valid
   const isInvalid = password === "" || email === "";
-
+  const subscription = useSubscription(user);
+  // console.log({ subscription });
   useEffect(() => {
     if (loading) {
       // maybe trigger a loading screen
       return;
     }
-    if (!user) {
-      router.push(HOME_PAGE_PATH);
-      //  setLoading(false);
-    }
+
     if (user) {
       console.log("Signed in! Navigate to browse page...");
       router.push(DASHBOARD_PAGE_PATH);
@@ -49,18 +49,15 @@ function Login() {
     }
   }, [user, loading]);
 
-
   if (user) {
-    // user is signed out or still being checked.
-    // don't render anything
     router.push(DASHBOARD_PAGE_PATH);
   }
 
   const onFormSubmit: SubmitHandler<LoginData> = async (data) => {
     console.log(data);
 
-    return logInWithEmailAndPassword(data.email, data.password).then(() => {
-      router.push("/browse");
+    logInWithEmailAndPassword(data.email, data.password).then(() => {
+      subscription && router.push(DASHBOARD_PAGE_PATH);
     });
   };
   return (
@@ -100,19 +97,26 @@ function Login() {
           Sign In
         </button>
       </form>
-
+      <div className="flex text-[#737373] text-left text-sm font-medium justify-between w-full mb-10">
+        <span>Forgot your password? </span>
+        <Link
+          href={RESET_PAGE_PATH}
+          className="no-underline hover:underline self-end"
+        >
+          <span className="hover:text-white text-sm cursor-pointer text-[#737373]">
+            Need help.
+          </span>
+        </Link>
+      </div>
       <p className="text-[#737373] text-left text-md font-medium">
         New to Netflix?{" "}
         <Link href={SIGN_UP_PAGE_PATH} className="no-underline hover:underline">
           <span className="text-white cursor-pointer">Sign up now.</span>
         </Link>
       </p>
-      <p className="mt-2 text-sm text-left text-[#8c8c8c]">
-        This page is protected by Google reCAPTCHA to ensure you're not a bot.
-        Learn more.
-        {/* <div>
-          <Link href="/reset">Forgot Password</Link>
-        </div> */}
+      <p className="mt-2 text-xs text-left text-[#8c8c8c]">
+        This page is protted by Google reCAPTCHA to ensure you're not a bot.{" "}
+        <span className="text-blue-500">Learn more.</span>
       </p>
     </div>
   );

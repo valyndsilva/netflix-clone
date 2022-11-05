@@ -46,10 +46,10 @@ export default function SignUp() {
       // maybe trigger a loading screen
       return;
     }
-    if (!user) {
-      router.push(HOME_PAGE_PATH);
-      // setLoading(false);
-    }
+    // if (!user) {
+    //   router.push(HOME_PAGE_PATH);
+    //   // setLoading(false);
+    // }
     if (user) {
       console.log("User exists! Navigate to browse page...");
       router.push(DASHBOARD_PAGE_PATH);
@@ -59,8 +59,6 @@ export default function SignUp() {
 
 
   if (user) {
-    // user is signed out or still being checked.
-    // don't render anything
     router.push(DASHBOARD_PAGE_PATH);
   }
 
