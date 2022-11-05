@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth, logOut } from "../config/firebaseClient";
+import { auth } from "../config/firebaseClient";
 import { AuthContext, TmdbContext } from "../context";
 import { useSubscription } from "../hooks";
 import {
@@ -96,12 +96,6 @@ function BrowseNav() {
                   <InfoOutlined /> Help Center
                 </p>
                 <hr className=" border-slate-600" />
-                {/* <p
-                  className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold"
-                  onClick={logOut}
-                >
-                  Sign out of Netflix
-                </p> */}
                 <p
                   className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold"
                   onClick={async () => {

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { sendPasswordReset } from "../config/firebaseClient";
 import { SIGN_UP_PAGE_PATH } from "../config/paths";
 import { AuthContext } from "../context/AuthContext";
 function Reset() {
   const { email, setEmail } = useContext(AuthContext);
-    const router = useRouter();
+  const router = useRouter();
 
   return (
     <div className="reset h-full w-full flex items-center justify-center">
@@ -21,7 +21,6 @@ function Reset() {
         />
         <button
           className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
-          // onClick={() => sendPasswordReset(email)}
           onClick={async () => {
             await sendPasswordReset(email).then(() => {
               router.push("/");
