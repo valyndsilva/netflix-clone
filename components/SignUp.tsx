@@ -1,9 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link.js";
 import { useRouter } from "next/router.js";
 import { useForm } from "react-hook-form";
 import { registerWithEmailAndPassword } from "../config/firebaseClient";
 import { AuthContext } from "../context/AuthContext";
+import {
+  DASHBOARD_PAGE_PATH,
+  HOME_PAGE_PATH,
+  SIGN_IN_PAGE_PATH,
+} from "../config/paths";
 
 interface FormData {
   firstName: string;
@@ -12,39 +17,62 @@ interface FormData {
 }
 
 export default function SignUp() {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const router = useRouter();
+  // const [firstName, setFirstName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const {
+    user,
+    firstName,
+    setFirstName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+  } = useContext(AuthContext);
+  // console.log(user);
+  const [loading, setLoading] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const router = useRouter();
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(true);
-
   // check form input elements are valid
   const isInvalid = firstName === "" || password === "" || email === "";
 
-  // useEffect(() => {
-  //   if (loading) {
-  //     // maybe trigger a loading screen
-  //     return;
-  //   }
-  //   if (user) router.push("/browse");
-  // }, [user, loading]);
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (!user) {
+      router.push(HOME_PAGE_PATH);
+      // setLoading(false);
+    }
+    if (user) {
+      console.log("User exists! Navigate to browse page...");
+      router.push(DASHBOARD_PAGE_PATH);
+      setLoading(false);
+    }
+  }, [user, loading]);
+
+
+  if (user) {
+    // user is signed out or still being checked.
+    // don't render anything
+    router.push(DASHBOARD_PAGE_PATH);
+  }
 
   const onFormSubmit = async (data: FormData) => {
+    if (!firstName) alert("Please enter name");
     console.log(data);
     return await registerWithEmailAndPassword(
       data.firstName,
       data.email,
       data.password
     ).then(() => {
-      router.push("/browse");
+      router.push(DASHBOARD_PAGE_PATH);
     });
   };
 
@@ -97,7 +125,10 @@ export default function SignUp() {
 
         <p className="text-[#737373] text-left text-md font-medium">
           Already a user?{" "}
-          <Link href="/login" className="no-underline hover:underline">
+          <Link
+            href={SIGN_IN_PAGE_PATH}
+            className="no-underline hover:underline"
+          >
             <span className="text-white cursor-pointer"> Sign in now.</span>
           </Link>
         </p>

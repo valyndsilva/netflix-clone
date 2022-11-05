@@ -1,9 +1,14 @@
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { logInWithEmailAndPassword } from "../config/firebaseClient";
 import { AuthContext } from "../context/AuthContext";
+import {
+  DASHBOARD_PAGE_PATH,
+  HOME_PAGE_PATH,
+  SIGN_UP_PAGE_PATH,
+} from "../config/paths";
 
 interface LoginData {
   email: string;
@@ -11,8 +16,9 @@ interface LoginData {
 }
 
 function Login() {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const { user, email, setEmail, password, setPassword } =
+    useContext(AuthContext);
+  // console.log(user);
   const {
     register,
     handleSubmit,
@@ -20,20 +26,35 @@ function Login() {
   } = useForm<LoginData>();
 
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(true);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true);
 
   // check form input elements are valid
   const isInvalid = password === "" || email === "";
 
-  // useEffect(() => {
-  //   if (loading) {
-  //     // maybe trigger a loading screen
-  //     return;
-  //   }
-  //   if (user) router.push("/browse");
-  // }, [user, loading]);
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (!user) {
+      router.push(HOME_PAGE_PATH);
+      //  setLoading(false);
+    }
+    if (user) {
+      console.log("Signed in! Navigate to browse page...");
+      router.push(DASHBOARD_PAGE_PATH);
+      setLoading(false);
+    }
+  }, [user, loading]);
+
+
+  if (user) {
+    // user is signed out or still being checked.
+    // don't render anything
+    router.push(DASHBOARD_PAGE_PATH);
+  }
 
   const onFormSubmit: SubmitHandler<LoginData> = async (data) => {
     console.log(data);
@@ -70,37 +91,7 @@ function Login() {
           onChange={({ target }) => setPassword(target.value)}
           autoComplete="off"
         />
-        {/* <div className="space-y-4">
-          <label className="inline-block w-full">
-            <input
-              type="email"
-              placeholder="Email"
-              className="input w-full rounded bg-[#333333] px-5 py-3.5 placeholder-[gray] outline-none focus:bg-[#454545]"
-              {...register("email", { required: true })}
-              onChange={({ target }) => setEmail(target.value)}
-            />
-            {errors.email && (
-              <p className="text-sm  text-orange-500">
-                Please enter a valid email.
-              </p>
-            )}
-          </label>
-          <label className="inline-block w-full">
-            <input
-              type="password"
-              {...register("password", { required: true })}
-              placeholder="Password"
-              className="input w-full rounded bg-[#333333] px-5 py-3.5 placeholder-[gray] outline-none focus:bg-[#454545]"
-              onChange={({ target }) => setPassword(target.value)}
-              autoComplete="off"
-            />
-            {errors.password && (
-              <p className="text-sm  text-orange-500">
-                Your password must contain between 4 and 60 characters.
-              </p>
-            )}
-          </label>
-        </div> */}
+
         <button
           className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
           disabled={isInvalid}
@@ -112,13 +103,16 @@ function Login() {
 
       <p className="text-[#737373] text-left text-md font-medium">
         New to Netflix?{" "}
-        <Link href="/signup" className="no-underline hover:underline">
+        <Link href={SIGN_UP_PAGE_PATH} className="no-underline hover:underline">
           <span className="text-white cursor-pointer">Sign up now.</span>
         </Link>
       </p>
       <p className="mt-2 text-sm text-left text-[#8c8c8c]">
         This page is protected by Google reCAPTCHA to ensure you're not a bot.
         Learn more.
+        {/* <div>
+          <Link href="/reset">Forgot Password</Link>
+        </div> */}
       </p>
     </div>
   );

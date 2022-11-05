@@ -33,6 +33,11 @@ import payments from "../lib/stripe";
 import useSubscription from "../hooks/useSubscription";
 import Plans from "../components/Plans";
 import { AuthContext } from "../context/AuthContext";
+import { useRouter } from "next/router";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../config/firebaseClient";
+import { DASHBOARD_PAGE_PATH, HOME_PAGE_PATH } from "../config/paths";
+// import { AuthContext } from "../context/UserAuthContext";
 
 interface Props {
   listData: any;
@@ -76,14 +81,36 @@ function browse({
   products,
 }: Props) {
   // console.log(products);
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+  // console.log({ user });
 
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { user } = useContext(AuthContext);
-  console.log({ user });
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (!user) {
+      router.push(HOME_PAGE_PATH);
+    }
+    if (user) {
+      console.log("User exists! You are on the browse page...");
+      router.push(DASHBOARD_PAGE_PATH);
+      setLoading(false);
+    }
+  }, [user, loading]);
+
+  if (!user) {
+    // user is signed out or still being checked.
+    // don't render anything
+     router.push(HOME_PAGE_PATH);
+  }
+
   const { setMovieId, setFeatureItem } = useContext(TmdbContext);
-console.log(randomMovieItem);
+  // console.log(randomMovieItem);
 
   // const subscription = false;
   const subscription = useSubscription(user);
@@ -116,7 +143,7 @@ console.log(randomMovieItem);
   useEffect(() => {
     //@ts-expect-error
     setSlideRows(slides[category]);
-    console.log(slideRows);
+    // console.log(slideRows);
   }, [category]);
 
   // Search Results Logic

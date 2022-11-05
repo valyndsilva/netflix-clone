@@ -8,6 +8,7 @@ export { default as Accordion } from "./Accordion";
 export { default as Faqs } from "./Faqs";
 export { default as OptForm } from "./OptForm";
 export { default as Login } from "./Login";
+export { default as Reset } from "./Reset";
 export { default as SignUp } from "./SignUp";
 export { default as Feature } from "./Feature";
 export { default as Profiles } from "./Profiles";

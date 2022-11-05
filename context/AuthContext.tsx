@@ -1,13 +1,36 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, ReactNode } from "react";
 import nookies from "nookies";
 import { auth } from "../config/firebaseClient";
 import { User } from "firebase/auth";
-export const AuthContext = createContext<{ user: User | null }>({
-  user: null,
-});
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+interface AuthContextState {
+  user: User | null;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  error: string | null;
+  setError: (error: any) => void;
+  firstName: string;
+  setFirstName: (firstName: string) => void;
+  email: string;
+  setEmail: (email: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+}
+// export const AuthContext = createContext<{ user: User | null }>({
+export const AuthContext = createContext<AuthContextState>(
+  {} as AuthContextState
+);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -44,6 +67,22 @@ export function AuthProvider({ children }: any) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        setLoading,
+        error,
+        setError,
+        firstName,
+        setFirstName,
+        email,
+        setEmail,
+        password,
+        setPassword,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }

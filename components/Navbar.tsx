@@ -14,7 +14,7 @@ function Navbar() {
 
   const showSignIn = () => {
     if (path === "/login" || path === "/signup") return null;
-    if (path === "/")
+    if (path === "/" || path === "/reset")
       return (
         <Link href="/login">
           <div className="flex bg-[#e50914] w-20 h-fit text-white border-0 text-sm rounded-md py-2 px-4 cursor-pointer box-border hover:bg-[#f40612]">
@@ -29,6 +29,7 @@ function Navbar() {
     if (
       path === "/" ||
       path === "/login" ||
+      path === "/reset" ||
       path === "/signup" ||
       path === "/browse" ||
       path === "/account"

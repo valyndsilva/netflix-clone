@@ -52,6 +52,7 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
     alert(`User not found! Please register to login: ${err.message}`);
   }
 };
+
 const registerWithEmailAndPassword = async (
   name: string,
   email: string,
