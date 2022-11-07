@@ -83,9 +83,11 @@ function BrowseNav() {
                 </p>
               </div>
               <div className="flex flex-col cursor-pointer mb-0 px-3 space-y-4 text-left">
+               <Link href="/account">
                 <p className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold mt-2 gap-4 flex items-center">
                   <EditOutlined /> Manage Profiles
                 </p>
+               </Link>
 
                 <Link href="/account">
                   <p className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold  gap-4 flex items-center">
