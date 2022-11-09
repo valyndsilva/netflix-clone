@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Faqs, Footer, Jumbotron, Hero } from "../components";
-const Home: NextPage = () => {
 
+
+const Home: NextPage = () => {
   return (
     <div className="flex flex-col ">
       <Head>

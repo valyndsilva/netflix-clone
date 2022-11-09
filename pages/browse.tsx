@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import type { GetServerSidePropsContext, GetServerSideProps } from "next";
-import { Browse, Loading, Profiles } from "../components";
+import type { GetServerSideProps } from "next";
 import {
   MovieItem,
   SeriesItem,
@@ -31,6 +30,7 @@ import useSubscription from "../hooks/useSubscription";
 import Plans from "../components/Plans";
 import useAuth from "../hooks/useAuth";
 import GlobalContext from "../context/GlobalContext";
+import { Browse, Loading, Profiles } from "../components";
 
 interface Props {
   listData: any;

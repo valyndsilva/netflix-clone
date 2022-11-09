@@ -7,6 +7,7 @@ import { TmdbProvider } from "../context/TmdbContext";
 import { ModalProvider } from "../context/ModalContext";
 import { GlobalProvider } from "../context/GlobalContext";
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   // To fix hydration UI mismatch issues
   const [mounted, setMounted] = useState(false);
@@ -14,6 +15,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMounted(true);
   }, []);
   if (!mounted) return null;
+
+
   return (
     <GlobalProvider>
       <AuthProvider>

@@ -1,27 +1,22 @@
-import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import React from "react";
 import { GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
-import Membership from "../components/Membership";
-import { auth } from "../config/firebase";
-import useSubscription from "../hooks/useSubscription";
-import payments from "../lib/stripe";
 import Image from "next/image";
-import { ArrowBackOutlined } from "@mui/icons-material";
-import { Footer } from "../components";
+import useSubscription from "../hooks/useSubscription";
 import useAuth from "../hooks/useAuth";
+import payments from "../lib/stripe";
+import { ArrowBackOutlined } from "@mui/icons-material";
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import { Footer, Membership } from "../components";
 
 interface Props {
   products: Product[];
 }
 
 function Account({ products }: Props) {
-  const { user, logout, loading } = useAuth();
+  const { user, logout } = useAuth();
   console.log(products);
-
-  const router = useRouter();
   const subscription = useSubscription(user);
 
   return (
@@ -78,10 +73,13 @@ function Account({ products }: Props) {
           <h4 className="text-lg text-[gray]">Settings</h4>
           <p
             className="col-span-3 cursor-pointer text-blue-500 hover:underline"
+            // onClick={async () => {
+            //   await auth.signOut().then(() => {
+            //     router.push("/");
+            //   });
+            // }}
             onClick={async () => {
-              await auth.signOut().then(() => {
-                router.push("/");
-              });
+              await logout();
             }}
           >
             Sign out of all devices
