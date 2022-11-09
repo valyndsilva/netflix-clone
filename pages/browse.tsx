@@ -175,19 +175,7 @@ function browse({
   if (subscription === undefined) return <Plans products={products} />;
 
   if (user && subscription)
-    //@ts-ignore
-    // return profile && profile?.displayName ? (
-    //   <>
-    //     {loading ? <Loading src={user.photoURL} /> : <Loading.ReleaseBody />}
-    //     <div className="flex flex-col">
-    //       <Browse />
-    //     </div>
-    //   </>
-    // ) : (
-    //   <Profiles />
-    //   // <Profiles setProfile={setProfile}/>
-    // );
-    return profile?.displayName === null && profile?.photoURL === null ? (
+    return profile?.displayName === null && profile?.photoURL === undefined ? (
       <Profiles />
     ) : (
       <>

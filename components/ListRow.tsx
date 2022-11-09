@@ -13,7 +13,7 @@ interface Props {
 export default function ListRow({ slideItem }: Props) {
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
-  // console.log(slideItem);
+  console.log(slideItem);
   const listItemRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (direction: string) => {

@@ -116,13 +116,6 @@ export default function selectFilter({
         top10: true,
         featuredRow: false,
       },
-      {
-        title: "Trending Movies",
-        data: trendingMovies,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
     ],
     series: [
       {
@@ -130,14 +123,6 @@ export default function selectFilter({
         data: topRatedSeries,
         type: "tv",
         top10: true,
-        featuredRow: false,
-      },
-
-      {
-        title: "Korean TV Dramas",
-        data: eastAsiaSeries,
-        type: "tv",
-        top10: false,
         featuredRow: false,
       },
       {
@@ -157,14 +142,6 @@ export default function selectFilter({
       {
         title: "Animation",
         data: animation,
-        type: "tv",
-        top10: false,
-        featuredRow: false,
-      },
-
-      {
-        title: "Series",
-        data: series,
         type: "tv",
         top10: false,
         featuredRow: false,
@@ -202,13 +179,6 @@ export default function selectFilter({
       {
         title: "Action",
         data: action,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
-      {
-        title: "Movies",
-        data: movies,
         type: "movie",
         top10: false,
         featuredRow: false,
