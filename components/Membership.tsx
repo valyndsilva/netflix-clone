@@ -1,12 +1,12 @@
 import Link from "next/link";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../hooks";
 import useSubscription from "../hooks/useSubscription";
 import { goToBillingPortal } from "../lib/stripe";
 import Loader from "./Loader";
 
 function Membership() {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const subscription = useSubscription(user);
   const [isBillingLoading, setBillingLoading] = useState(false);
 
@@ -32,7 +32,7 @@ function Membership() {
             {isBillingLoading ? (
               <Loader color="dark:fill-[#e50914]" />
             ) : (
-              "Cancel Membership"
+              "Update or Cancel Membership"
             )}
           </button>
         ) : (

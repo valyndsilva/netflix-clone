@@ -51,7 +51,7 @@ function Plans({ products }: Props) {
             {products.map((product) => (
               <div
                 key={product.id}
-                className={`relative mx-1.5 flex h-20 bg-[#e50914] w-[calc(100%/3)] cursor-default  items-center justify-center rounded-sm font-semibold shadow after:absolute after:top-full after:left-1/2 after:block after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-[#e50914] after:content-[""] md:h-32 lg:mx-8; ${
+                className={`relative mx-1.5 flex h-20 bg-[#e50914] w-[calc(100%/4)] cursor-default  text-center items-center justify-center rounded-sm font-semibold shadow after:absolute after:top-full after:left-1/2 after:block after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-[#e50914] after:content-[""] md:h-32 lg:mx-8; ${
                   selectedPlan?.id === product.id ? "opacity-100" : "opacity-60"
                 }`}
                 onClick={() => setSelectedPlan(product)}

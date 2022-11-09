@@ -27,7 +27,7 @@ function JumbotronItem({ item, direction, className }: Props) {
         className={`${className} flex items-center justify-between max-w-[1100px] my-0 mx-auto flex-col md:flex-${direction} `}
         key={item.id}
       >
-        <div className="h-full w-full py-0 pr-11 justify-center flex flex-col text-center lg:text-left md:w-1/2 z-30">
+        <div className="h-full w-full py-0 pr-11 pl-11 justify-center flex flex-col text-center lg:text-left md:w-1/2 z-30">
           <h1 className="leading-4 font-bold mb-2 text-2xl md:text-4xl xl:text-5xl ">
             {item.title}
           </h1>

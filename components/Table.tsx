@@ -1,4 +1,4 @@
-import { Check } from "@mui/icons-material";
+import { Check, HorizontalRule } from "@mui/icons-material";
 import { Product } from "@stripe/firestore-stripe-payments";
 import React from "react";
 interface Props {
@@ -16,7 +16,7 @@ function Table({ products, selectedPlan }: Props) {
           </td>
           {products.map((product) => (
             <td
-              className={`tableDataFeature w-[calc(100%/3)] p-2.5 text-center md:w-[calc(60%/3)] md:p-3.5 ${
+              className={`tableDataFeature w-[calc(100%/4)] p-2.5 text-center md:w-[calc(60%/4)] md:p-3.5 ${
                 selectedPlan?.id === product.id
                   ? "text-[#E50914]"
                   : "text-[gray]"
@@ -33,7 +33,7 @@ function Table({ products, selectedPlan }: Props) {
           </td>
           {products.map((product) => (
             <td
-              className={`tableDataFeature w-[calc(100%/3)] p-2.5 text-center md:w-[calc(60%/3)] md:p-3.5 ${
+              className={`tableDataFeature w-[calc(100%/4)] p-2.5 text-center md:w-[calc(60%/4)] md:p-3.5 ${
                 selectedPlan?.id === product.id
                   ? "text-[#E50914]"
                   : "text-[gray]"
@@ -50,7 +50,7 @@ function Table({ products, selectedPlan }: Props) {
           </td>
           {products.map((product) => (
             <td
-              className={`tableDataFeature w-[calc(100%/3)] p-2.5 text-center md:w-[calc(60%/3)] md:p-3.5 ${
+              className={`tableDataFeature w-[calc(100%/4)] p-2.5 text-center md:w-[calc(60%/4)] md:p-3.5 ${
                 selectedPlan?.id === product.id
                   ? "text-[#E50914]"
                   : "text-[gray]"
@@ -67,7 +67,7 @@ function Table({ products, selectedPlan }: Props) {
           </td>
           {products.map((product) => (
             <td
-              className={`tableDataFeature w-[calc(100%/3)] p-2.5 text-center md:w-[calc(60%/3)] md:p-3.5 ${
+              className={`tableDataFeature w-[calc(100%/4)] p-2.5 text-center md:w-[calc(60%/4)] md:p-3.5 ${
                 selectedPlan?.id === product.id
                   ? "text-[#E50914]"
                   : "text-[gray]"
@@ -76,6 +76,27 @@ function Table({ products, selectedPlan }: Props) {
             >
               {product.metadata.portability === "true" && (
                 <Check className="inline-block h-8 w-8" />
+              )}
+            </td>
+          ))}
+        </tr>
+        <tr className="tableRow flex flex-wrap items-center font-medium">
+          <td className="tableDataTitle w-full p-2.5 text-center text-sm font-normal text-white md:w-2/5 md:p-3.5 md:text-left md:text-base">
+            Downloads
+          </td>
+          {products.map((product) => (
+            <td
+              className={`tableDataFeature w-[calc(100%/4)] p-2.5 text-center md:w-[calc(60%/4)] md:p-3.5 ${
+                selectedPlan?.id === product.id
+                  ? "text-[#E50914]"
+                  : "text-[gray]"
+              }`}
+              key={product.id}
+            >
+              {product.metadata.downloads === "true" ? (
+                <Check className="inline-block h-8 w-8" />
+              ) : (
+                <HorizontalRule className="inline-block h-8 w-8" />
               )}
             </td>
           ))}
