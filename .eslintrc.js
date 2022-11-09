@@ -35,6 +35,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "valid-typeof": "off",
   },
   settings: {
     react: {
