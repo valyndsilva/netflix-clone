@@ -46,11 +46,11 @@ function Navbar() {
         </Link>
       );
     if (
-      (user && path === "/") ??
-      (user && path === "/login") ??
-      (user && path === "/reset") ??
-      (user && path === "/signup") ??
-      (user && path === "/browse") ??
+      (user && path === "/") ||
+      (user && path === "/login") ||
+      (user && path === "/reset") ||
+      (user && path === "/signup") ||
+      (user && path === "/browse") ||
       (user && path === "/account")
     )
       return (

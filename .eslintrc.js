@@ -34,6 +34,7 @@ module.exports = {
     "react/no-unescaped-entities": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
   },
   settings: {
     react: {
