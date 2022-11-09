@@ -11,6 +11,9 @@ const nextConfig = withTM({
   experimental: {
     esmExternals: "loose",
   },
+  // time in seconds of no pages generating during static
+  // generation before timing out
+  staticPageGenerationTimeout: 1000,
 });
 
 module.exports = nextConfig;
