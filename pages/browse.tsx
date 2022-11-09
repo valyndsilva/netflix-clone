@@ -73,7 +73,7 @@ function browse({
   products,
 }: Props) {
   const { profile } = useContext(GlobalContext);
-  console.log(profile);
+  // console.log(profile);
   const { user, loading } = useAuth();
   // console.log(user);
 

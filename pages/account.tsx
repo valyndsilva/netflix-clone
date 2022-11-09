@@ -1,5 +1,5 @@
 import React from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -94,7 +94,7 @@ function Account({ products }: Props) {
 
 export default Account;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const products = await getProducts(payments, {
     includePrices: true,
     activeOnly: true,

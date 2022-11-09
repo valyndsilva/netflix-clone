@@ -33,3 +33,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+function getInitialProps() {
+  return {};
+}
+
+MyApp.getInitialProps = getInitialProps;
