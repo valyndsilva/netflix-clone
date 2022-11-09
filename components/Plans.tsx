@@ -4,14 +4,15 @@ import React, { useContext, useState } from "react";
 import { loadCheckout } from "../lib/stripe";
 import Loader from "./Loader";
 import Table from "./Table";
-import { AuthContext } from "../context/AuthContext";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   products: Product[];
 }
 
 function Plans({ products }: Props) {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   console.log({ user });
 
   const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[2]);

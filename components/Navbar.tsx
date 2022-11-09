@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useScrollPosition } from "../hooks/useScrollPosition";
 import BrowseNav from "./BrowseNav";
+import { useAuth } from "../hooks";
 
 function Navbar() {
   const scrollPosition = useScrollPosition();
@@ -12,6 +13,8 @@ function Navbar() {
   const path = router?.asPath; // URL from router
   // console.log(path);
 
+  const { user } = useAuth();
+  // console.log(user);
   const showSignIn = () => {
     if (path === "/login" || path === "/signup") return null;
     if (path === "/" || path === "/reset")
@@ -22,17 +25,33 @@ function Navbar() {
           </div>
         </Link>
       );
-    if (path === "/browse" || path === "/account") return <BrowseNav />;
+    if (path === "/dashboard" || path === "/browse" || path === "/account")
+      return <BrowseNav />;
   };
 
   const showLogo = () => {
     if (
-      path === "/" ||
-      path === "/login" ||
-      path === "/reset" ||
-      path === "/signup" ||
-      path === "/browse" ||
-      path === "/account"
+      (!user && path === "/") ||
+      (!user && path === "/login") ||
+      (!user && path === "/reset") ||
+      (!user && path === "/signup") ||
+      (!user && path === "/browse") ||
+      (!user && path === "/account")
+    )
+      return (
+        <Link href="/">
+          <div className="cursor-pointer relative h-10 w-24 md:w-24 md:h-20 mr-10 ml-5">
+            <Image src="/logo.svg" layout="fill" objectFit="contain" />
+          </div>
+        </Link>
+      );
+    if (
+      (user && path === "/") ??
+      (user && path === "/login") ??
+      (user && path === "/reset") ??
+      (user && path === "/signup") ??
+      (user && path === "/browse") ??
+      (user && path === "/account")
     )
       return (
         <Link href="/browse">

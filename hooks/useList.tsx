@@ -1,6 +1,6 @@
 import { collection, DocumentData, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../config/firebaseClient";
+import { db } from "../config/firebase";
 import { MovieItem } from "../types/typings";
 
 function useList(uid: string | undefined) {

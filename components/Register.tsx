@@ -1,77 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link.js";
 import { useRouter } from "next/router.js";
-import { useForm } from "react-hook-form";
-import { registerWithEmailAndPassword } from "../config/firebaseClient";
-import { AuthContext } from "../context/AuthContext";
-import {
-  DASHBOARD_PAGE_PATH,
-  HOME_PAGE_PATH,
-  SIGN_IN_PAGE_PATH,
-} from "../config/paths";
+import { SubmitHandler, useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+import { SIGN_IN_PAGE_PATH } from "../config/paths";
 
-interface FormData {
+interface RegisterForm {
   firstName: string;
   email: string;
   password: string;
 }
 
-export default function SignUp() {
+export default function Register() {
+  const [signup, setSignup] = useState(false);
+  const { signUp, user } = useAuth();
+  console.log({ user });
+  console.log({ signup });
   const router = useRouter();
-  // const [firstName, setFirstName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const {
-    user,
-    firstName,
-    setFirstName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-  } = useContext(AuthContext);
-  // console.log(user);
-  const [loading, setLoading] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<RegisterForm>();
 
-  // check form input elements are valid
-  const isInvalid = firstName === "" || password === "" || email === "";
-
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-    // if (!user) {
-    //   router.push(HOME_PAGE_PATH);
-    //   // setLoading(false);
-    // }
-    if (user) {
-      console.log("User exists! Navigate to browse page...");
-      router.push(DASHBOARD_PAGE_PATH);
-      setLoading(false);
-    }
-  }, [user, loading]);
-
-
-  if (user) {
-    router.push(DASHBOARD_PAGE_PATH);
-  }
-
-  const onFormSubmit = async (data: FormData) => {
-    if (!firstName) alert("Please enter name");
+  const onFormSubmit: SubmitHandler<RegisterForm> = async (data) => {
     console.log(data);
-    return await registerWithEmailAndPassword(
-      data.firstName,
-      data.email,
-      data.password
-    ).then(() => {
-      router.push(DASHBOARD_PAGE_PATH);
-    });
+    if (signup) {
+      await signUp(data.firstName, data.email, data.password);
+    } else {
+      router.push(SIGN_IN_PAGE_PATH);
+    }
   };
 
   return (
@@ -91,7 +49,7 @@ export default function SignUp() {
             {...register("firstName", { required: true })}
             aria-invalid={errors.firstName ? "true" : "false"}
             className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
-            onChange={({ target }) => setFirstName(target.value)}
+            // onChange={({ target }) => setFirstName(target.value)}
           />
 
           <input
@@ -99,7 +57,7 @@ export default function SignUp() {
             placeholder="Email address"
             // value={email}
             {...register("email")}
-            onChange={({ target }) => setEmail(target.value)}
+            // onChange={({ target }) => setEmail(target.value)}
             className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
           />
           <input
@@ -107,21 +65,25 @@ export default function SignUp() {
             placeholder="Enter password"
             // value={password}
             {...register("password")}
-            onChange={({ target }) => setPassword(target.value)}
+            // onChange={({ target }) => setPassword(target.value)}
             autoComplete="off"
             className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-0"
           />
 
           <button
             className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
-            disabled={isInvalid}
+            // disabled={isInvalid}
             type="submit"
+            onClick={() => setSignup(true)}
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-[#737373] text-left text-md font-medium">
+        <p
+          className="text-[#737373] text-left text-md font-medium"
+          onClick={() => setSignup(false)}
+        >
           Already a user?{" "}
           <Link
             href={SIGN_IN_PAGE_PATH}

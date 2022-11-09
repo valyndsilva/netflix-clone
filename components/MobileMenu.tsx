@@ -2,9 +2,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../context";
 import TmdbContext from "../context/TmdbContext";
-import { useSubscription } from "../hooks";
+import { useAuth, useSubscription } from "../hooks";
 
 export default function MobileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -17,9 +16,9 @@ export default function MobileMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const subscription = useSubscription(user);
-  const {  setCategory } = useContext(TmdbContext);
+  const { setCategory } = useContext(TmdbContext);
   return (
     <div className="md:!hidden self-center">
       <Button

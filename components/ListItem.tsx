@@ -10,9 +10,9 @@ import {
   QuerySnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebaseClient";
+import { db } from "../config/firebase";
 import apiConfig from "../config/apiConfig";
-import { AuthContext, TmdbContext, ModalContext } from "../context";
+import { TmdbContext, ModalContext } from "../context";
 import { useTimeConvert, useList } from "../hooks";
 import { IconButton } from "@mui/material";
 import {
@@ -24,6 +24,7 @@ import {
 } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { SlideRows } from "../types/typings";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   index: number;
@@ -40,7 +41,8 @@ export default function ListItem({
   top10,
   featuredRow,
 }: Props) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  // const { user } = useContext(AuthContext);
   // console.log(user);
   const list = useList(user?.uid);
   // console.log(list);
@@ -258,7 +260,7 @@ export default function ListItem({
                       myMovieListItems?.poster_path ||
                       myTvListItems?.poster_path
                   )
-                : apiConfig.unavailablePortrait
+                : apiConfig.noPicture
             }
           />
         </div>

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../hooks";
 import useSubscription from "../hooks/useSubscription";
 import { goToBillingPortal } from "../lib/stripe";
 import Loader from "./Loader";
 
 function Membership() {
-  const { user } = useContext(AuthContext);
+    const { user } = useAuth();
   const subscription = useSubscription(user);
   const [isBillingLoading, setBillingLoading] = useState(false);
 

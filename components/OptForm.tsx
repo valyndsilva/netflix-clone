@@ -1,7 +1,10 @@
 import React from "react";
 import { ChevronRight } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import { SIGN_UP_PAGE_PATH } from "../config/paths";
 
 function OptForm() {
+  const router = useRouter();
   return (
     <div className="flex flex-col md:flex-row items-center text-center justify-center flex-wrap h-full max-w-[950px] pt-3 mx-auto">
       <p className="text-white  mb-4 py-0 px-[10%] text-md md:text-lg">
@@ -15,6 +18,9 @@ function OptForm() {
       <button
         type="submit"
         className="flex justify-center items-center h-10 md:h-14 xl:h-16 bg-[#e50914] text-white py-0 px-8 mt-5 md:mt-0 text-sm md:text-2xl md:border-0 md:border-l-[1px] md:border-[#333] cursor-pointer hover:bg-[#f40612]"
+        onClick={() => {
+          router.push(SIGN_UP_PAGE_PATH);
+        }}
       >
         Get Started <ChevronRight className="h-6 w-6" />
       </button>

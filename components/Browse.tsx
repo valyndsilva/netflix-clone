@@ -9,7 +9,7 @@ import { SlideRows } from "../types/typings";
 
 function Browse() {
   const { slideRows } = useContext(TmdbContext);
-  console.log({ slideRows });
+  // console.log({ slideRows });
 
   const { isModal } = useContext(ModalContext);
   return (

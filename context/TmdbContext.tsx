@@ -3,6 +3,7 @@ import axiosClient from "../lib/axiosClient";
 import apiConfig from "../config/apiConfig";
 import YouTube from "react-youtube";
 import { MovieItem, SeriesItem } from "../types/typings";
+
 interface TmdbProviderProps {
   children: ReactNode;
 }
@@ -11,8 +12,8 @@ interface Tmdb {
   featureItem: any;
   setFeatureItem: (featureItem: any) => void;
   //BrowseNav and Browse
-  category: string;
-  setCategory: (name: string) => void;
+  category: any;
+  setCategory: (name: any) => void;
   slideRows: any;
   setSlideRows: (item: any) => void;
   //Feature
@@ -59,6 +60,9 @@ interface Tmdb {
   myMovieListItems: any;
   setMyMovieListItems: (items: any) => void;
   //Modal
+  selectValue: string;
+  setSelectValue: (selectValue: string) => void;
+  fetchSeasonDetails: (mediaType: string, id: number, seasonNo: number) => void;
   isHovered: boolean;
   setIsHovered: (isHovered: boolean) => void;
   creditsData: string;
@@ -73,15 +77,13 @@ interface Tmdb {
   setEpisodesData: (episodesData: any) => void;
   truncate: any;
   //Search
-  onChange: any;
-  searchQuery: string;
-  setSearchQuery: (searchQuery: string) => void;
+  handleSearch: any;
+  searchTerm: string;
+  setSearchTerm: (searchTerm: string) => void;
   searchActive: boolean;
   setSearchActive: (prev: (searchActive: boolean) => boolean) => void;
   searchResults: any;
   setSearchResults: (searchResults: any) => void;
-  ///
-
   myMovieSearchItems: any;
   setMyMovieSearchItems: any;
   myTvSearchItems: any;
@@ -116,6 +118,7 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
   const [myTvListItems, setMyTvListItems] = useState([]);
   const [myMovieListItems, setMyMovieListItems] = useState([]);
   //Modal
+  const [selectValue, setSelectValue] = useState("Select Season");
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [creditsData, setCreditsData] = useState("");
   const [genreData, setGenreData] = useState([]);
@@ -123,9 +126,11 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
   const [seasonsData, setSeasonsData] = useState([]);
   const [episodesData, setEpisodesData] = useState([]);
   //Search
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchActive, setSearchActive] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  //  const debouncedSearchTerm: string = useDebounce<string>(searchTerm, 500);
+
   //browse page
   const [myTvSearchItems, setMyTvSearchItems] = useState([]);
   const [myMovieSearchItems, setMyMovieSearchItems] = useState([]);
@@ -262,8 +267,6 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
         // console.log("Episode Img_Path:", el.still_path);
         return setEpisodeNo(el.episode_number);
       });
-
-      // await fetchEpisodeDetails(mediaType, itemId, seasonNo, episodeNo);
     }
   };
 
@@ -453,7 +456,7 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
     // console.log("selectItem mediaType:", mediaType);
     //@ts-ignore
     setMediaTypeData(mediaType);
-    console.log("selectItem id:", id);
+    // console.log("selectItem id:", id);
     //@ts-ignore
     setItemId(id);
     //@ts-ignore
@@ -464,13 +467,19 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
     await fetchRatings(mediaType, id);
   };
 
+  // Debounce search term so that it only gives us latest value ...
+  // ... if searchTerm has not been updated within last 500ms.
+  // The goal is to only have the API call fire when user stops typing ...
+  // ... so that we aren't hitting our API rapidly.
+  // We pass generic type, this case string
+
   // Search Functionality
-  const fetchSearch = async (searchQuery: any) => {
+  const fetchSearch = async (searchTerm: any) => {
     const params = {
       language: "en-US",
       page: 1,
       include_adult: false,
-      query: searchQuery,
+      query: searchTerm,
     };
 
     const search = async (_params: {
@@ -485,7 +494,7 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
       // GET /search/movie
       // https://developers.themoviedb.org/3/search/search-tv-shows
       // GET /search/tv
-      const url = `search/multi?query=${searchQuery}&language=en-US&page=1&include_adult=false`;
+      const url = `search/multi?query=${searchTerm}&language=en-US&page=1&include_adult=false`;
       return axiosClient.get(url, {
         params: { api_key: apiConfig.apiKey },
       }); // works
@@ -494,22 +503,29 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
       params,
     });
     const resData = res.data;
-    console.log("fetchSearch resData", resData);
+    // console.log("fetchSearch resData", resData);
     if (!resData.errors) {
+      setSearchActive(true);
       setSearchResults(resData.results);
+      setSearchActive(false);
     } else {
       setSearchResults([]);
     }
   };
 
-  const onChange = (e: {
-    preventDefault: () => void;
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    e.preventDefault();
-    setSearchQuery(e.target.value);
-    fetchSearch(e.target.value);
+  // Option 1
+  const handleSearch = (input: string) => {
+    // console.log(input);
+    setSearchTerm(input);
+    fetchSearch(input);
   };
+
+  // // Option 2
+  // const handleSearch = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  //   // console.log(event.target.value);
+  //   setSearchTerm(event.target.value);
+  //   fetchSearch(event.target.value);
+  // };
 
   return (
     <TmdbContext.Provider
@@ -566,6 +582,8 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
         myMovieListItems,
         setMyMovieListItems,
         //Modal
+        selectValue,
+        setSelectValue,
         isHovered,
         setIsHovered,
         creditsData,
@@ -579,10 +597,11 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
         episodesData,
         setEpisodesData,
         truncate,
+        fetchSeasonDetails,
         //Search
-        onChange,
-        searchQuery,
-        setSearchQuery,
+        handleSearch,
+        searchTerm,
+        setSearchTerm,
         searchActive,
         setSearchActive,
         searchResults,

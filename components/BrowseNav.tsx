@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { auth } from "../config/firebaseClient";
-import { AuthContext, TmdbContext } from "../context";
+import { TmdbContext } from "../context";
 import { useSubscription } from "../hooks";
 import {
   ArrowDropDown,
@@ -14,12 +12,13 @@ import {
 } from "@mui/icons-material";
 import Search from "./Search";
 import MobileMenu from "./MobileMenu";
+import useAuth from "../hooks/useAuth";
 
 function BrowseNav() {
   const { setCategory } = useContext(TmdbContext);
-  const { user } = useContext(AuthContext);
+  // console.log(category);
+  const { user, logout } = useAuth();
   const subscription = useSubscription(user);
-  const router = useRouter();
 
   return (
     <div className="flex w-full justify-between h-full">
@@ -83,11 +82,11 @@ function BrowseNav() {
                 </p>
               </div>
               <div className="flex flex-col cursor-pointer mb-0 px-3 space-y-4 text-left">
-               <Link href="/account">
-                <p className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold mt-2 gap-4 flex items-center">
-                  <EditOutlined /> Manage Profiles
-                </p>
-               </Link>
+                <Link href="/account">
+                  <p className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold mt-2 gap-4 flex items-center">
+                    <EditOutlined /> Manage Profiles
+                  </p>
+                </Link>
 
                 <Link href="/account">
                   <p className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold  gap-4 flex items-center">
@@ -100,10 +99,13 @@ function BrowseNav() {
                 <hr className=" border-slate-600" />
                 <p
                   className="text-white no-underline mr-5 text-sm cursor-pointer hover:font-medium active:font-bold"
+                  // onClick={async () => {
+                  //   await auth.signOut().then(() => {
+                  //     router.push("/");
+                  //   });
+                  // }}
                   onClick={async () => {
-                    await auth.signOut().then(() => {
-                      router.push("/");
-                    });
+                    await logout();
                   }}
                 >
                   Sign out of Netflix

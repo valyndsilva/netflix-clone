@@ -3,7 +3,7 @@ import {
   getStripePayments,
 } from "@stripe/firestore-stripe-payments";
 import { getFunctions, httpsCallable } from "@firebase/functions";
-import app from "../config/firebaseClient";
+import app from "../config/firebase";
 
 //  getStripePayments: Serves as the main entry point to this library. Initializes the client SDK, and returns a handle object that can be passed into other APIs.
 const payments = getStripePayments(app, {

@@ -23,21 +23,24 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebaseClient";
-import { AuthContext } from "../context/AuthContext";
+import { db } from "../config/firebase";
 import useList from "../hooks/useList";
 import toast from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 
 export default function Modal() {
   const [itemData, setItemData] = useState<DocumentData>([]);
   const [addedToList, setAddedToList] = useState(false);
   console.log({ addedToList });
   console.log({ itemData });
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  // const { user } = useContext(AuthContext);
   // console.log(user);
   const list = useList(user?.uid);
-  console.log(list);
+  // console.log(list);
   const {
+    selectValue,
+    setSelectValue,
     setIsHovered,
     isFeatured,
     selectItem,
@@ -57,14 +60,14 @@ export default function Modal() {
   } = useContext(TmdbContext);
 
   const { modalData, setIsModal, isModal } = useContext(ModalContext);
-  // console.log(modalData);
-  const [selectValue, setSelectValue] = useState("Select Season");
 
-  function handleSelectValue(e: {
-    target: { value: React.SetStateAction<string> };
-  }) {
-    return setSelectValue(e.target.value);
+  // console.log(modalData);
+  // const [selectValue, setSelectValue] = useState("Select Season");
+
+  function handleSelectValue(e: any) {
+    setSelectValue(e.target.value);
   }
+
   const baseImgUrl = "https://image.tmdb.org/t/p/original/";
 
   const runTime = useTimeConvert(duration);
@@ -280,7 +283,11 @@ export default function Modal() {
               <span>Episodes</span>
               <span>
                 Season:
-                <select value={selectValue} onChange={handleSelectValue}>
+                <select
+                  value={selectValue}
+                  onChange={handleSelectValue}
+                  className="bg-[#141414] border-[1px] rounded-sm ml-2"
+                >
                   {seasonsData.map((el: any) => (
                     <option key={el.id} value={el.name}>
                       {el.name}

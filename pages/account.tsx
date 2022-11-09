@@ -3,25 +3,25 @@ import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React from "react";
 import Membership from "../components/Membership";
-import { AuthContext } from "../context/AuthContext";
-import { auth } from "../config/firebaseClient";
+import { auth } from "../config/firebase";
 import useSubscription from "../hooks/useSubscription";
 import payments from "../lib/stripe";
 import Image from "next/image";
 import { ArrowBackOutlined } from "@mui/icons-material";
 import { Footer } from "../components";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   products: Product[];
 }
 
 function Account({ products }: Props) {
+  const { user, logout, loading } = useAuth();
   console.log(products);
 
   const router = useRouter();
-  const { user } = useContext(AuthContext);
   const subscription = useSubscription(user);
 
   return (

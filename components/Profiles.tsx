@@ -1,19 +1,21 @@
 import Image from "next/image";
 import React, { useContext } from "react";
 import { AddCircle } from "@mui/icons-material";
-import { AuthContext } from "../context/AuthContext";
-interface Props {
-  setProfile: any;
-}
-//setProfile will come from Browse page
-function Profiles({ setProfile }: Props) {
-  const { user } = useContext(AuthContext);
-  // console.log(user);
+import useAuth from "../hooks/useAuth";
+import GlobalContext from "../context/GlobalContext";
+
+function Profiles() {
+  const { user } = useAuth();
+  console.log(user);
+
+  const { setProfile } = useContext(GlobalContext);
   const handleClick = () => {
     setProfile({
-      displayName: user!.displayName,
-      photoURL: user!.photoURL,
+      displayName: user?.displayName!,
+      photoURL: user?.photoURL!,
     });
+    localStorage.setItem("displayName", user?.displayName!);
+    localStorage.setItem("photoURL", user?.photoURL!);
   };
   return (
     <div className="flex flex-col text-center px-10 z-10 w-[100vw] ">
