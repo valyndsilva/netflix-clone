@@ -1,13 +1,12 @@
-import React from "react";
 import "../styles/globals.css";
+import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-// import { AuthProvider } from "../context/AuthContext";
 import { AuthProvider } from "../hooks/useAuth";
 import { TmdbProvider } from "../context/TmdbContext";
 import { ModalProvider } from "../context/ModalContext";
 import { GlobalProvider } from "../context/GlobalContext";
+import app from "../config/firebase";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // To fix hydration UI mismatch issues
@@ -16,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMounted(true);
   }, []);
   if (!mounted) return null;
+  console.log("app :", app);
   return (
     <GlobalProvider>
       <AuthProvider>
