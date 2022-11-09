@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useScrollPosition } from "../hooks/useScrollPosition";
+import  useScrollPosition from "../hooks/useScrollPosition";
 import BrowseNav from "./BrowseNav";
 import { useAuth } from "../hooks";
 

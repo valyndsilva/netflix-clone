@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { db } from "../config/firebase";
 import { MovieItem } from "../types/typings";
 
-function useList(uid: string | undefined) {
+export default function useList(uid: string | undefined) {
   const [list, setList] = useState<MovieItem[] | DocumentData[]>([]);
 
   useEffect(() => {
@@ -24,5 +24,3 @@ function useList(uid: string | undefined) {
 
   return list;
 }
-
-export default useList;

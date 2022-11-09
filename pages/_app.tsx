@@ -6,7 +6,6 @@ import { AuthProvider } from "../hooks/useAuth";
 import { TmdbProvider } from "../context/TmdbContext";
 import { ModalProvider } from "../context/ModalContext";
 import { GlobalProvider } from "../context/GlobalContext";
-import app from "../config/firebase";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // To fix hydration UI mismatch issues
@@ -15,7 +14,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMounted(true);
   }, []);
   if (!mounted) return null;
-  console.log("app :", app);
   return (
     <GlobalProvider>
       <AuthProvider>

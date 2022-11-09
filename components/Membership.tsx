@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import { useAuth } from "../hooks";
 import useSubscription from "../hooks/useSubscription";
 import { goToBillingPortal } from "../lib/stripe";

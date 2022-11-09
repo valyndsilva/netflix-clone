@@ -7,7 +7,7 @@ function Hero() {
       <h2 className="text-white max-w-[640px] text-2xl md:text-5xl font-bold m-auto">
         Unlimited films, TV programmes and more.
       </h2>
-      <h3 className="text-white text-xl md:text-2xl mt-5 mx-auto mb-2 md:mb-5">
+      <h3 className="text-white text-xl md:text-2xl mt-5 mx-auto mb-2">
         Watch anywhere. Cancel at any time.
       </h3>
       <OptForm />

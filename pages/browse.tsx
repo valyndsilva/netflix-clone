@@ -72,9 +72,8 @@ function browse({
   movieItemId,
   products,
 }: Props) {
-  const { profile, setProfile } = useContext(GlobalContext);
+  const { profile } = useContext(GlobalContext);
   console.log(profile);
-
   const { user, loading } = useAuth();
   // console.log(user);
 
@@ -175,7 +174,7 @@ function browse({
   if (subscription === undefined) return <Plans products={products} />;
 
   if (user && subscription)
-    return profile?.displayName === null && profile?.photoURL === undefined ? (
+    return profile?.displayName === null && profile?.photoURL === null ? (
       <Profiles />
     ) : (
       <>

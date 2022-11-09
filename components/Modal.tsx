@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import TmdbContext from "../context/TmdbContext";
-import { useTimeConvert } from "../hooks/useTimeConvert";
+import  {useTimeConvert}  from "../hooks";
 import apiConfig from "../config/apiConfig";
 import {
   collection,
