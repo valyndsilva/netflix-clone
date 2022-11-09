@@ -40,11 +40,17 @@ export default function Reset() {
         >
           <input
             type="text"
-            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            className={`${
+              errors.email && "border-b-2 border-orange-500"
+            } bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4`}
             placeholder="Email address"
+            {...register("email", { required: true })}
           />
+          {errors.email && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">
+              Please enter a valid email.
+            </p>
+          )}
           <button
             className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
             // onClick={async () => {

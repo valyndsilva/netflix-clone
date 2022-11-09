@@ -48,28 +48,52 @@ export default function Register() {
             // value={firstName}
             {...register("firstName", { required: true })}
             aria-invalid={errors.firstName ? "true" : "false"}
-            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+            className={`${
+              errors.firstName && "border-b-2 border-orange-500"
+            } bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4`}
             // onChange={({ target }) => setFirstName(target.value)}
           />
-
+          {errors.firstName && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">
+              Please enter a name.
+            </p>
+          )}
           <input
             type="email"
             placeholder="Email address"
             // value={email}
-            {...register("email")}
+            {...register("email", { required: true })}
             // onChange={({ target }) => setEmail(target.value)}
-            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4"
+            className={`${
+              errors.email && "border-b-2 border-orange-500"
+            } bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4`}
           />
+          {errors.email && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">
+              Please enter a valid email.
+            </p>
+          )}
           <input
             type="password"
             placeholder="Enter password"
             // value={password}
-            {...register("password")}
+            {...register("password", {
+              required: true,
+              maxLength: 20,
+              minLength: 4,
+            })}
             // onChange={({ target }) => setPassword(target.value)}
             autoComplete="off"
-            className="bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-0"
+            className={`${
+              errors.password && "border-b-2 border-orange-500"
+            } bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4`}
           />
-
+          {errors.password && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">
+              Please enter a password. Your password must contain between 4 and
+              20 characters.
+            </p>
+          )}
           <button
             className="bg-[#e50914] rounded-md text-md text-bold mt-6 mx-0 mb-3 p-4 border-0 text-white cursor-pointer disabled:opacity-50"
             // disabled={isInvalid}

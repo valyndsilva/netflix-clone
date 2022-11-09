@@ -1,4 +1,4 @@
-import React, {  useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -15,8 +15,8 @@ function Login() {
   const [login, setLogin] = useState(false);
   const { signIn, user } = useAuth();
   console.log({ user });
-    const { profile } = useContext(GlobalContext);
-    console.log(profile);
+  const { profile } = useContext(GlobalContext);
+  console.log(profile);
 
   const router = useRouter();
   const {
@@ -60,12 +60,17 @@ function Login() {
             errors.password && "border-b-2 border-orange-500"
           } bg-[#333] rounded-md border-0 text-white h-12 leading-10 py-1 px-5 mb-4`}
           placeholder="Password"
-          {...register("password")}
+          {...register("password", {
+            required: true,
+            maxLength: 20,
+            minLength: 4,
+          })}
           autoComplete="off"
         />
         {errors.password && (
           <p className="p-1 text-[13px] font-light  text-orange-500">
-            Your password must contain between 4 and 60 characters.
+            Please enter a password. Your password must contain between 4 and 20
+            characters.
           </p>
         )}
 
