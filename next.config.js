@@ -8,6 +8,9 @@ const nextConfig = withTM({
   images: {
     domains: ["image.tmdb.org"],
   },
+  experimental: {
+    esmExternals: "loose",
+  },
 });
 
 module.exports = nextConfig;
