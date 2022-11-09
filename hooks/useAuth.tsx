@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           localStorage.removeItem("user");
           setUser(null);
           setLoading(true);
-          router.push("/login");
+          router.push("/");
         }
 
         setInitialLoading(false);
