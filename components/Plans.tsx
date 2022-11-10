@@ -13,15 +13,18 @@ interface Props {
 function Plans({ products }: Props) {
   // const { user } = useContext(AuthContext);
   const { user } = useAuth();
-  console.log({ user });
+  // console.log({ user });
 
-  const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[2]);
+  const [selectedPlan, setSelectedPlan] = useState<
+    Product["metadata"] | null | any
+  >(products[2]);
   const [isBillingLoading, setBillingLoading] = useState(false);
 
   const subscribeToPlan = () => {
     if (!user) return;
 
-    loadCheckout(selectedPlan?.prices[0].id!);
+    // loadCheckout(selectedPlan?.prices[0].id!);
+    loadCheckout(selectedPlan?.metadata!.priceId);
     setBillingLoading(true);
   };
 
