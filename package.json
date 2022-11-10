@@ -29,7 +29,6 @@
     "next": "^12.3.1",
     "next-transpile-modules": "^9.1.0",
     "node-fetch": "^3.2.10",
-    "nookies": "^2.5.2",
     "npm": "^8.19.3",
     "postcss-import": "^15.0.0",
     "query-string": "^7.1.1",
