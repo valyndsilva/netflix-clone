@@ -7,6 +7,7 @@ interface Props {
 }
 
 function Table({ products, selectedPlan }: Props) {
+  console.log(products);
   return (
     <table>
       <tbody className="divide-y divide-[gray]">
@@ -23,7 +24,8 @@ function Table({ products, selectedPlan }: Props) {
               }`}
               key={product.id}
             >
-              £ {product.prices[0].unit_amount! / 100}
+              {/* £ {product.prices[0]?.unit_amount! / 100} */}
+              {product.metadata.price}
             </td>
           ))}
         </tr>
