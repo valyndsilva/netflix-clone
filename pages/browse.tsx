@@ -222,8 +222,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
   ]);
 
   // Random Movie Item Image
-  const randomMovieItem: any | null =
-    movies[Math.floor(Math.random() * movies?.length - 1)];
+  // const randomMovieItem =
+  //   movies[Math.floor(Math.random() * movies?.length - 1)];
+    const randomMovieItem =
+      movies[1];
   const bgImg = apiConfig.originalImage(randomMovieItem?.backdrop_path);
   const movieItemId = randomMovieItem?.id;
 

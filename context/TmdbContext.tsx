@@ -404,10 +404,13 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
   // // console.log("trailerData:", trailerData);
 
   const getTrailer = () => {
-    //@ts-ignore
+    // console.log(trailerData);
+//@ts-ignore
     const trailer = trailerData?.results.find(
       (vid: { name: string }) =>
-        vid.name === "Official Trailer" || vid.name === "Official Teaser"
+        // vid.name === "Official Trailer" || vid.name === "Official Teaser"
+        vid.name.includes("Official Trailer") ||
+        vid.name.includes("Official Teaser")
     );
 
     // console.log(trailer);

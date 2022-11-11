@@ -19,6 +19,21 @@ export interface IToken {
   user_id: string;
 }
 
+export interface ITrailer {
+  id: number;
+  results: {
+    id: string;
+    iso_639_1: string;
+    iso_3166_1: string;
+    key: string;
+    name: string;
+    official: boolean;
+    published_at: string;
+    site: string;
+    size: number;
+    type: string;
+  };
+}
 export interface Slides {
   home: SlideRows;
   series: SlideRows;
@@ -57,7 +72,7 @@ interface Data {
   poster_path: string;
   vote_average: number;
   vote_count: number;
-};
+}
 
 export interface Trending extends Data {
   adult: boolean;
@@ -141,4 +156,4 @@ export interface Detail {
 export interface Genre {
   id: number;
   name: string;
-};
+}
