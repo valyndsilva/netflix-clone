@@ -104,7 +104,21 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+          npm run export
+          touch out/.nojekyll
+          npm set-script build "next build"
+          npm set-script export "next export"
+      - name: Deploy
+        # https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@4.4.0 
+        with:
+          branch: gh-pages
+          folder: out
+          
   # Deployment job
   deploy:
     environment:
