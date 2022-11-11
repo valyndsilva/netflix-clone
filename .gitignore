@@ -31,7 +31,6 @@ yarn-error.log*
 # vercel
 .vercel
 /node_modules/@stripe/firestore-stripe-payments/node_modules/node-fetch/lib/index.js
-package-lock.json 
 
 # typescript
 *.tsbuildinfo
