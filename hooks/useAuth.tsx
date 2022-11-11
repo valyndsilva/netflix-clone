@@ -17,7 +17,7 @@ import {
 import { addDoc, collection } from "firebase/firestore";
 
 import { useRouter } from "next/router";
-import { auth, db } from "../config/firebase";
+import app, { auth, db } from "../config/firebase";
 
 interface IAuth {
   user: User | null;
@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user) {
+          console.log(app);
           // Logged in...
           localStorage.setItem("user", JSON.stringify(user));
           // const uid = user.uid;

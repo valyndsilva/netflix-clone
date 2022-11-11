@@ -48,7 +48,7 @@ interface Props {
   mystery: MovieItem[];
   action: MovieItem[];
   animation: SeriesItem[];
-  randomMovieItem: MovieItem;
+  randomMovieItem: MovieItem | null;
   bgImg: string;
   movieItemId: number;
   products: Product[];
@@ -222,7 +222,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   ]);
 
   // Random Movie Item Image
-  const randomMovieItem: any =
+  const randomMovieItem: any | null =
     movies[Math.floor(Math.random() * movies?.length - 1)];
   const bgImg = apiConfig.originalImage(randomMovieItem?.backdrop_path);
   const movieItemId = randomMovieItem?.id;
