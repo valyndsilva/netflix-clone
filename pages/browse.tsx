@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import type { GetServerSideProps, GetStaticProps } from "next";
+import React, { useContext, useEffect} from "react";
+import type { GetStaticProps } from "next";
 import apiConfig from "../config/apiConfig";
 import selectFilter from "../helpers/selectFilter";
 import TmdbContext from "../context/TmdbContext";
@@ -10,9 +10,6 @@ import Plans from "../components/Plans";
 import useAuth from "../hooks/useAuth";
 import GlobalContext from "../context/GlobalContext";
 import { Browse, Loading, Profiles } from "../components";
-import fetchApi from "../utils/fetchApi";
-import axiosClient from "../lib/axiosClient";
-import axios from "axios";
 import { requests } from "../utils/constants";
 import { fetchAxios } from "../utils/fetchAxios";
 
@@ -171,8 +168,7 @@ function browse({
 
 export default browse;
 
-// Server-Side Rendering:
-//Authenticated Server-side rendering with Next.js and Firebase Authentication
+//ISR
 export const getStaticProps: GetStaticProps = async () => {
   // const action = await fetchAxios(requests.fetchAction);
 
