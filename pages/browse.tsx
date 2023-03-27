@@ -1,6 +1,6 @@
 import React, { useContext, useEffect} from "react";
 import type { GetStaticProps } from "next";
-import selectFilter from "../helpers/selectFilter";
+import useFilter from "../hooks/useFilter";
 import TmdbContext from "../context/TmdbContext";
 import { getProducts, Product } from "@stripe/firestore-stripe-payments";
 import payments from "../lib/stripe";
@@ -15,8 +15,8 @@ import { fetchAxios } from "../utils";
 interface Props {
   listData: any;
   netflixOriginals: SeriesItem[];
-  eastAsiaMovies: MovieItem[];
-  eastAsiaSeries: SeriesItem[];
+  // eastAsiaMovies: MovieItem[];
+  // eastAsiaSeries: SeriesItem[];
   newReleases: MovieItem[];
   topRatedMovies: MovieItem[];
   topRatedSeries: SeriesItem[];
@@ -24,7 +24,7 @@ interface Props {
   trendingSeries: TrendingSeries[];
   series: SeriesItem[];
   movies: MovieItem[];
-  comedyMovies: MovieItem[];
+  // comedyMovies: MovieItem[];
   mystery: MovieItem[];
   action: MovieItem[];
   animation: SeriesItem[];
@@ -35,8 +35,8 @@ interface Props {
 }
 function browse({
   netflixOriginals,
-  eastAsiaMovies,
-  eastAsiaSeries,
+  // eastAsiaMovies,
+  // eastAsiaSeries,
   newReleases,
   topRatedMovies,
   topRatedSeries,
@@ -45,7 +45,7 @@ function browse({
   series,
   movies,
   action,
-  comedyMovies,
+  // comedyMovies,
   animation,
   randomMovieItem,
   bgImg,
@@ -74,18 +74,18 @@ function browse({
   } = useContext(TmdbContext);
   // console.log(category);
   // Get slides
-  const slides = selectFilter({
+  const slides = useFilter({
     netflixOriginals,
-    eastAsiaMovies,
-    eastAsiaSeries,
+    // eastAsiaMovies,
+    // eastAsiaSeries,
     newReleases,
     topRatedMovies,
     topRatedSeries,
     trendingMovies,
     trendingSeries,
-    series,
-    movies,
-    comedyMovies,
+    // series,
+    // movies,
+    // comedyMovies,
     action,
     animation,
     myTvSearchItems,
@@ -139,7 +139,7 @@ function browse({
     } else {
       //@ts-ignore
       setSlideRows(slides[category]);
-      // console.log("Display slideRows from selectFilter", slideRows);
+      // console.log("Display slideRows from useFilter", slideRows);
     }
     // eslint-disable-next-line
   }, [searchTerm]);
@@ -173,8 +173,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const [
     netflixOriginals,
-    eastAsiaMovies,
-    eastAsiaSeries,
+    // eastAsiaMovies,
+    // eastAsiaSeries,
     newReleases,
     topRatedMovies,
     topRatedSeries,
@@ -182,13 +182,13 @@ export const getStaticProps: GetStaticProps = async () => {
     trendingSeries,
     series,
     movies,
-    comedyMovies,
+    // comedyMovies,
     action,
     animation,
   ] = await Promise.all([
     fetchAxios(requests.fetchNetflixOriginals),
-    fetchAxios(requests.fetchEastAsiaMovies),
-    fetchAxios(requests.fetchEastAsiaSeries),
+    // fetchAxios(requests.fetchEastAsiaMovies),
+    // fetchAxios(requests.fetchEastAsiaSeries),
     fetchAxios(requests.fetchNewReleases),
     fetchAxios(requests.fetchTopRatedMovies),
     fetchAxios(requests.fetchTopRatedSeries),
@@ -196,7 +196,7 @@ export const getStaticProps: GetStaticProps = async () => {
     fetchAxios(requests.fetchTrendingSeries),
     fetchAxios(requests.fetchSeries),
     fetchAxios(requests.fetchMovies),
-    fetchAxios(requests.fetchComedyMovies),
+    // fetchAxios(requests.fetchComedyMovies),
     fetchAxios(requests.fetchAction),
     fetchAxios(requests.fetchAnimation),
   ]);
@@ -218,8 +218,8 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       netflixOriginals,
-      eastAsiaMovies,
-      eastAsiaSeries,
+      // eastAsiaMovies,
+      // eastAsiaSeries,
       newReleases,
       topRatedMovies,
       topRatedSeries,
@@ -227,7 +227,7 @@ export const getStaticProps: GetStaticProps = async () => {
       trendingSeries,
       series,
       movies,
-      comedyMovies,
+      // comedyMovies,
       action,
       animation,
       randomMovieItem,

@@ -10,7 +10,6 @@ import {
   QuerySnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebase";
 import { TmdbContext, ModalContext } from "../context";
 import { useTimeConvert, useList } from "../hooks";
 import { IconButton } from "@mui/material";
@@ -24,6 +23,7 @@ import {
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { apiConfig } from "../utils/constants";
+import { db } from "../lib/firebaseClient";
 
 interface Props {
   index: number;

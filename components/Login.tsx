@@ -2,9 +2,9 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { RESET_PAGE_PATH, SIGN_UP_PAGE_PATH } from "../config/paths";
 import useAuth from "../hooks/useAuth";
 import GlobalContext from "../context/GlobalContext";
+import { paths } from "../utils/constants";
 
 interface LoginData {
   email: string;
@@ -30,7 +30,7 @@ function Login() {
     if (login) {
       await signIn(data.email, data.password);
     } else {
-      router.push(SIGN_UP_PAGE_PATH);
+      router.push(paths.SIGN_UP_PAGE_PATH);
     }
   };
   return (
@@ -85,7 +85,7 @@ function Login() {
       <div className="flex text-[#737373] text-left text-sm font-medium justify-between w-full mb-10">
         <span>Forgot your password? </span>
         <Link
-          href={RESET_PAGE_PATH}
+          href={paths.RESET_PAGE_PATH}
           className="no-underline hover:underline self-end"
         >
           <span className="hover:text-white text-sm cursor-pointer text-[#737373]">
@@ -98,7 +98,7 @@ function Login() {
         onClick={() => setLogin(false)}
       >
         New to Netflix?{" "}
-        <Link href={SIGN_UP_PAGE_PATH} className="no-underline hover:underline">
+        <Link href={paths.SIGN_UP_PAGE_PATH} className="no-underline hover:underline">
           <span className="text-white cursor-pointer">Sign up now.</span>
         </Link>
       </p>

@@ -22,11 +22,11 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebase";
 import useList from "../hooks/useList";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { apiConfig } from "../utils/constants";
+import { db } from "../lib/firebaseClient";
 
 export default function Modal() {
   const [itemData, setItemData] = useState<DocumentData>([]);

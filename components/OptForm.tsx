@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { SIGN_UP_PAGE_PATH } from "../config/paths";
+import { paths } from "../utils/constants";
 
 function OptForm() {
   const router = useRouter();
@@ -19,7 +19,7 @@ function OptForm() {
         type="submit"
         className="flex justify-center items-center h-10 md:h-14 xl:h-16 bg-[#e50914] text-white py-0 px-8 mt-5 md:mt-0 text-sm md:text-2xl md:border-0 md:border-l-[1px] md:border-[#333] cursor-pointer hover:bg-[#f40612]"
         onClick={() => {
-          router.push(SIGN_UP_PAGE_PATH);
+          router.push(paths.SIGN_UP_PAGE_PATH);
         }}
       >
         Get Started <ChevronRight className="h-6 w-6" />

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { SIGN_UP_PAGE_PATH } from "../config/paths";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../hooks";
+import { paths } from "../utils/constants";
 
 interface ResetForm {
   email: string;
@@ -26,7 +26,7 @@ export default function Reset() {
     if (resetFn) {
       reset(data.email);
     } else {
-      router.push(SIGN_UP_PAGE_PATH);
+      router.push(paths.SIGN_UP_PAGE_PATH);
     }
   };
   return (
@@ -69,7 +69,7 @@ export default function Reset() {
         >
           Don't have an account?{" "}
           <Link
-            href={SIGN_UP_PAGE_PATH}
+            href={paths.SIGN_UP_PAGE_PATH}
             className="no-underline hover:underline"
           >
             <span className="hover:text-white cursor-pointer">

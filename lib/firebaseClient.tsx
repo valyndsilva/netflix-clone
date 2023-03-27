@@ -3,26 +3,26 @@ import * as firebaseClient from "firebase/app";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import {
   getAuth,
-  signInWithPopup,
+  // signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
   updateProfile,
-  setPersistence,
-  browserSessionPersistence,
+  // setPersistence,
+  // browserSessionPersistence,
 } from "firebase/auth";
 import {
   getFirestore,
-  query,
-  getDocs,
+  // query,
+  // getDocs,
   collection,
-  where,
+  // where,
   addDoc,
 } from "firebase/firestore";
 import Error from "next/error";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

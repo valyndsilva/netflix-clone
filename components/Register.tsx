@@ -3,7 +3,7 @@ import Link from "next/link.js";
 import { useRouter } from "next/router.js";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
-import { SIGN_IN_PAGE_PATH } from "../config/paths";
+import { paths } from "../utils/constants";
 
 interface RegisterForm {
   firstName: string;
@@ -28,7 +28,7 @@ export default function Register() {
     if (signup) {
       await signUp(data.firstName, data.email, data.password);
     } else {
-      router.push(SIGN_IN_PAGE_PATH);
+      router.push(paths.SIGN_IN_PAGE_PATH);
     }
   };
 
@@ -110,7 +110,7 @@ export default function Register() {
         >
           Already a user?{" "}
           <Link
-            href={SIGN_IN_PAGE_PATH}
+            href={paths.SIGN_IN_PAGE_PATH}
             className="no-underline hover:underline"
           >
             <span className="text-white cursor-pointer"> Sign in now.</span>

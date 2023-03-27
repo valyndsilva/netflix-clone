@@ -1,15 +1,15 @@
 interface Props {
   netflixOriginals: SeriesItem[];
-  eastAsiaMovies: MovieItem[];
-  eastAsiaSeries: SeriesItem[];
+  // eastAsiaMovies: MovieItem[];
+  // eastAsiaSeries: SeriesItem[];
   newReleases: MovieItem[];
   topRatedMovies: MovieItem[];
   topRatedSeries: SeriesItem[];
   trendingMovies: TrendingMovies[];
   trendingSeries: TrendingSeries[];
-  series: SeriesItem[];
-  movies: MovieItem[];
-  comedyMovies: MovieItem[];
+  // series: SeriesItem[];
+  // movies: MovieItem[];
+  // comedyMovies: MovieItem[];
   action: MovieItem[];
   animation: SeriesItem[];
   myTvSearchItems: any;
@@ -18,18 +18,18 @@ interface Props {
   myMovieListItems: any;
 }
 
-export default function selectFilter({
+export default function useFilter({
   netflixOriginals,
-  eastAsiaMovies,
-  eastAsiaSeries,
+  // eastAsiaMovies,
+  // eastAsiaSeries,
   newReleases,
   topRatedMovies,
   topRatedSeries,
   trendingMovies,
   trendingSeries,
-  series,
-  movies,
-  comedyMovies,
+  // series,
+  // movies,
+  // comedyMovies,
   action,
   animation,
   myTvSearchItems,
@@ -39,13 +39,13 @@ export default function selectFilter({
 }: Props) {
   return {
     home: [
-      {
-        title: "East Asia",
-        data: eastAsiaMovies,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
+      // {
+      //   title: "East Asia",
+      //   data: eastAsiaMovies,
+      //   type: "movie",
+      //   top10: false,
+      //   featuredRow: false,
+      // },
       {
         title: "Netflix Originals",
         data: netflixOriginals,
@@ -74,13 +74,13 @@ export default function selectFilter({
         top10: false,
         featuredRow: false,
       },
-      {
-        title: "Comedies",
-        data: comedyMovies,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
+      // {
+      //   title: "Comedies",
+      //   data: comedyMovies,
+      //   type: "movie",
+      //   top10: false,
+      //   featuredRow: false,
+      // },
       {
         title: "New Releases",
         data: newReleases,
@@ -95,13 +95,13 @@ export default function selectFilter({
         top10: false,
         featuredRow: false,
       },
-      {
-        title: "Korean TV Dramas",
-        data: eastAsiaSeries,
-        type: "tv",
-        top10: false,
-        featuredRow: false,
-      },
+      // {
+      //   title: "Korean TV Dramas",
+      //   data: eastAsiaSeries,
+      //   type: "tv",
+      //   top10: false,
+      //   featuredRow: false,
+      // },
       {
         title: "Top 10 Programmes in the UK Today",
         data: topRatedSeries,
@@ -148,20 +148,20 @@ export default function selectFilter({
         top10: true,
         featuredRow: false,
       },
-      {
-        title: "East Asia",
-        data: eastAsiaMovies,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
-      {
-        title: "Comedies",
-        data: comedyMovies,
-        type: "movie",
-        top10: false,
-        featuredRow: false,
-      },
+      // {
+      //   title: "East Asia",
+      //   data: eastAsiaMovies,
+      //   type: "movie",
+      //   top10: false,
+      //   featuredRow: false,
+      // },
+      // {
+      //   title: "Comedies",
+      //   data: comedyMovies,
+      //   type: "movie",
+      //   top10: false,
+      //   featuredRow: false,
+      // },
       {
         title: "New Releases",
         data: newReleases,

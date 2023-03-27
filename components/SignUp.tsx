@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link.js";
 import { useRouter } from "next/router.js";
 import { useForm } from "react-hook-form";
-import { registerWithEmailAndPassword } from "../config/firebaseClient";
 import { useAuth } from "../hooks";
+import { registerWithEmailAndPassword } from "../lib/firebaseClient";
 
 interface FormData {
   firstName: string;

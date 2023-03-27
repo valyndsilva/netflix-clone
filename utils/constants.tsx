@@ -1,7 +1,7 @@
 export const apiConfig = {
+  baseURL: "https://api.themoviedb.org/3",
   apiKey: process.env.NEXT_PUBLIC_TMDB_API_KEY,
   apiToken: process.env.NEXT_PUBLIC_TMDB_API_TOKEN,
-  baseURL: "https://api.themoviedb.org/3",
   originalImage: (imgPath: string) =>
     `https://image.tmdb.org/t/p/original/${imgPath}`,
   w500Image: (imgPath: string) => `https://image.tmdb.org/t/p/w500/${imgPath}`,
@@ -9,7 +9,6 @@ export const apiConfig = {
   unavailablePortrait: "/unavailablePortait.jpeg",
   unavailableLandscape: "/unavailableLandscape.png",
   noPicture: "/noPicture.jpeg",
-  basePlayerURL: "https://2embed.org/embed/",
 };
 
 export const requests = {
@@ -35,4 +34,12 @@ export const requests = {
   fetchTV: `/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&with_genres=10770`,
   fetchDocumentaries: `/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&with_genres=99&sort_by=popularity.desc`,
   fetchPopular: `/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&page=1&language=en-US&region=GB`,
+};
+
+export const paths = {
+  HOME_PAGE_PATH: `/`,
+  RESET_PAGE_PATH: `/reset`,
+  DASHBOARD_PAGE_PATH: `/browse`,
+  SIGN_IN_PAGE_PATH: `/login`,
+  SIGN_UP_PAGE_PATH: `/signup`,
 };

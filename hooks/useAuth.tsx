@@ -17,7 +17,7 @@ import {
 import { addDoc, collection } from "firebase/firestore";
 
 import { useRouter } from "next/router";
-import app, { auth, db } from "../config/firebase";
+import { auth, db } from "../lib/firebaseClient";
 
 interface IAuth {
   user: User | null;

@@ -1,6 +1,6 @@
 import { collection, DocumentData, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../config/firebase";
+import { db } from "../lib/firebaseClient";
 
 export default function useList(uid: string | undefined) {
   const [list, setList] = useState<MovieItem[] | DocumentData[]>([]);
