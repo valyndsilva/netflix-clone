@@ -1,6 +1,5 @@
 import React, { useContext, useEffect} from "react";
 import type { GetStaticProps } from "next";
-import apiConfig from "../config/apiConfig";
 import selectFilter from "../helpers/selectFilter";
 import TmdbContext from "../context/TmdbContext";
 import { getProducts, Product } from "@stripe/firestore-stripe-payments";
@@ -10,8 +9,8 @@ import Plans from "../components/Plans";
 import useAuth from "../hooks/useAuth";
 import GlobalContext from "../context/GlobalContext";
 import { Browse, Loading, Profiles } from "../components";
-import { requests } from "../utils/constants";
-import { fetchAxios } from "../utils/fetchAxios";
+import { apiConfig, requests } from "../utils/constants";
+import { fetchAxios } from "../utils";
 
 interface Props {
   listData: any;

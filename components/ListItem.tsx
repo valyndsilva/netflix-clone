@@ -11,7 +11,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
-import apiConfig from "../config/apiConfig";
 import { TmdbContext, ModalContext } from "../context";
 import { useTimeConvert, useList } from "../hooks";
 import { IconButton } from "@mui/material";
@@ -24,6 +23,7 @@ import {
 } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { apiConfig } from "../utils/constants";
 
 interface Props {
   index: number;

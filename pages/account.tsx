@@ -94,6 +94,7 @@ function Account({ products }: Props) {
 
 export default Account;
 
+// ISR
 export const getStaticProps: GetStaticProps = async () => {
   const products = await getProducts(payments, {
     includePrices: true,
@@ -106,5 +107,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       products,
     },
+    revalidate:60,
   };
 };

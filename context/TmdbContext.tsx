@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import axiosClient from "../lib/axiosClient";
-import apiConfig from "../config/apiConfig";
 import YouTube from "react-youtube";
+import { apiConfig } from "../utils/constants";
 
 interface TmdbProviderProps {
   children: ReactNode;

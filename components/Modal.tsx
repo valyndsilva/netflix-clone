@@ -14,7 +14,6 @@ import Image from "next/image";
 import Link from "next/link";
 import TmdbContext from "../context/TmdbContext";
 import { useTimeConvert } from "../hooks";
-import apiConfig from "../config/apiConfig";
 import {
   collection,
   deleteDoc,
@@ -27,6 +26,7 @@ import { db } from "../config/firebase";
 import useList from "../hooks/useList";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { apiConfig } from "../utils/constants";
 
 export default function Modal() {
   const [itemData, setItemData] = useState<DocumentData>([]);

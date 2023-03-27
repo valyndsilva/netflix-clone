@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import axiosClient from "../lib/axiosClient";
-import apiConfig from "../config/apiConfig";
+import { apiConfig } from "../utils/constants";
 import DefaultRow from "./DefaultRow";
 import FeaturedRow from "./FeaturedRow";
 
