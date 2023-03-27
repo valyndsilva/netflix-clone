@@ -1,29 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import type { GetServerSideProps } from "next";
-import {
-  MovieItem,
-  SeriesItem,
-  TrendingMovies,
-  TrendingSeries,
-} from "../types/typings";
+import type { GetServerSideProps, GetStaticProps } from "next";
 import apiConfig from "../config/apiConfig";
-import fetchMovies from "../utils/fetchMovies";
 import selectFilter from "../helpers/selectFilter";
 import TmdbContext from "../context/TmdbContext";
-import {
-  fetchNetflixOriginals,
-  fetchTopRatedMovies,
-  fetchTopRatedSeries,
-  fetchSeries,
-  fetchTrendingMovies,
-  fetchTrendingSeries,
-  fetchComedyMovies,
-  fetchEastAsiaSeries,
-  fetchEastAsiaMovies,
-  fetchNewReleases,
-  fetchAction,
-  fetchAnimation,
-} from "../utils";
 import { getProducts, Product } from "@stripe/firestore-stripe-payments";
 import payments from "../lib/stripe";
 import useSubscription from "../hooks/useSubscription";
@@ -31,6 +10,11 @@ import Plans from "../components/Plans";
 import useAuth from "../hooks/useAuth";
 import GlobalContext from "../context/GlobalContext";
 import { Browse, Loading, Profiles } from "../components";
+import fetchApi from "../utils/fetchApi";
+import axiosClient from "../lib/axiosClient";
+import axios from "axios";
+import { requests } from "../utils/constants";
+import { fetchAxios } from "../utils/fetchAxios";
 
 interface Props {
   listData: any;
@@ -64,8 +48,8 @@ function browse({
   trendingSeries,
   series,
   movies,
-  comedyMovies,
   action,
+  comedyMovies,
   animation,
   randomMovieItem,
   bgImg,
@@ -76,7 +60,6 @@ function browse({
   // console.log(profile);
   const { user, loading } = useAuth();
   // console.log(user);
-
   const {
     setHeroBg,
     category,
@@ -190,7 +173,9 @@ export default browse;
 
 // Server-Side Rendering:
 //Authenticated Server-side rendering with Next.js and Firebase Authentication
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
+  // const action = await fetchAxios(requests.fetchAction);
+
   const [
     netflixOriginals,
     eastAsiaMovies,
@@ -206,26 +191,25 @@ export const getServerSideProps: GetServerSideProps = async () => {
     action,
     animation,
   ] = await Promise.all([
-    fetchNetflixOriginals(),
-    fetchEastAsiaMovies(),
-    fetchEastAsiaSeries(),
-    fetchNewReleases(),
-    fetchTopRatedMovies(),
-    fetchTopRatedSeries(),
-    fetchTrendingMovies(),
-    fetchTrendingSeries(),
-    fetchSeries(),
-    fetchMovies(),
-    fetchComedyMovies(),
-    fetchAction(),
-    fetchAnimation(),
+    fetchAxios(requests.fetchNetflixOriginals),
+    fetchAxios(requests.fetchEastAsiaMovies),
+    fetchAxios(requests.fetchEastAsiaSeries),
+    fetchAxios(requests.fetchNewReleases),
+    fetchAxios(requests.fetchTopRatedMovies),
+    fetchAxios(requests.fetchTopRatedSeries),
+    fetchAxios(requests.fetchTrendingMovies),
+    fetchAxios(requests.fetchTrendingSeries),
+    fetchAxios(requests.fetchSeries),
+    fetchAxios(requests.fetchMovies),
+    fetchAxios(requests.fetchComedyMovies),
+    fetchAxios(requests.fetchAction),
+    fetchAxios(requests.fetchAnimation),
   ]);
 
   // Random Movie Item Image
   // const randomMovieItem =
   //   movies[Math.floor(Math.random() * movies?.length - 1)];
-    const randomMovieItem =
-      movies[1];
+  const randomMovieItem = movies[1];
   const bgImg = apiConfig.originalImage(randomMovieItem?.backdrop_path);
   const movieItemId = randomMovieItem?.id;
 
@@ -256,5 +240,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       movieItemId,
       products,
     },
+    revalidate: 60,
   };
 };

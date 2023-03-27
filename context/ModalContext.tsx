@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { MovieItem, SeriesItem } from "../types/typings";
 interface ModalProviderProps {
   children: React.ReactNode;
 }

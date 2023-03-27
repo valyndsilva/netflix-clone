@@ -23,7 +23,6 @@ import {
   KeyboardArrowDown,
 } from "@mui/icons-material";
 import toast from "react-hot-toast";
-import { SlideRows } from "../types/typings";
 import useAuth from "../hooks/useAuth";
 
 interface Props {
@@ -274,7 +273,7 @@ export default function ListItem({
 
           <div className="flex flex-col p-5 space-y-2">
             <div className="ml-2">
-              {truncate(
+              {item && truncate(
                 item.original_title ||
                   item.title ||
                   item.original_name ||

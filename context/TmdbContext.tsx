@@ -2,7 +2,6 @@ import React, { createContext, ReactNode, useState } from "react";
 import axiosClient from "../lib/axiosClient";
 import apiConfig from "../config/apiConfig";
 import YouTube from "react-youtube";
-import { MovieItem, SeriesItem } from "../types/typings";
 
 interface TmdbProviderProps {
   children: ReactNode;
@@ -405,7 +404,7 @@ export function TmdbProvider({ children }: TmdbProviderProps) {
 
   const getTrailer = () => {
     // console.log(trailerData);
-//@ts-ignore
+    //@ts-ignore
     const trailer = trailerData?.results.find(
       (vid: { name: string }) =>
         // vid.name === "Official Trailer" || vid.name === "Official Teaser"

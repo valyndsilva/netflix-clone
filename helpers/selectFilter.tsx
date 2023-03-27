@@ -1,10 +1,3 @@
-import {
-  MovieItem,
-  SeriesItem,
-  TrendingMovies,
-  TrendingSeries,
-} from "../types/typings";
-
 interface Props {
   netflixOriginals: SeriesItem[];
   eastAsiaMovies: MovieItem[];

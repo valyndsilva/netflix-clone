@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import ListRow from "./ListRow";
 import Modal from "./Modal";
 import { Toaster } from "react-hot-toast";
-import { SlideRows } from "../types/typings";
 
 function Browse() {
   const { slideRows } = useContext(TmdbContext);

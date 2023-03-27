@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import TmdbContext from "../context/TmdbContext";
-import  {useTimeConvert}  from "../hooks";
+import { useTimeConvert } from "../hooks";
 import apiConfig from "../config/apiConfig";
 import {
   collection,
@@ -115,7 +115,7 @@ export default function Modal() {
           modalData?.title || modalData?.original_name
         } has been removed from My List`,
         {
-          duration: 8000,
+          duration: 4000,
           style: toastStyle,
         }
       );
@@ -132,7 +132,7 @@ export default function Modal() {
           modalData?.title || modalData?.original_name
         } has been added to My List.`,
         {
-          duration: 8000,
+          duration: 4000,
           style: toastStyle,
         }
       );

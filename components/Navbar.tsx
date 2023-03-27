@@ -40,7 +40,7 @@ function Navbar() {
     )
       return (
         <Link href="/">
-          <div className="cursor-pointer relative h-10 w-24 md:w-24 md:h-20 mr-10 ml-5">
+          <div className="cursor-pointer relative h-10 w-24 md:w-24 md:h-20 mr-5 md:mr-10 md:ml-5">
             <Image src="/logo.svg" layout="fill" objectFit="contain" />
           </div>
         </Link>
@@ -55,7 +55,7 @@ function Navbar() {
     )
       return (
         <Link href="/browse">
-          <div className="cursor-pointer relative h-10 w-24 md:w-24 md:h-20 mr-10 ml-5">
+          <div className="cursor-pointer relative h-10 w-24 md:w-24 md:h-20 mr-5 md:mr-10 md:ml-5">
             <Image src="/logo.svg" layout="fill" objectFit="contain" />
           </div>
         </Link>

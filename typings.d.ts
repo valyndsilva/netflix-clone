@@ -1,4 +1,4 @@
-export interface IToken {
+interface IToken {
   aud: string;
   auth_time: number;
   email: string;
@@ -19,7 +19,7 @@ export interface IToken {
   user_id: string;
 }
 
-export interface ITrailer {
+interface ITrailer {
   id: number;
   results: {
     id: string;
@@ -34,7 +34,7 @@ export interface ITrailer {
     type: string;
   };
 }
-export interface Slides {
+interface Slides {
   home: SlideRows;
   series: SlideRows;
   movies: SlideRows;
@@ -42,7 +42,7 @@ export interface Slides {
   myList: SlideRows;
   mySearch: SlideRows;
 }
-export interface SlideRows {
+interface SlideRows {
   map(
     arg0: (
       slideItem: SlideRows,
@@ -57,7 +57,7 @@ export interface SlideRows {
   top10?: boolean;
   type: string;
 }
-export interface Ratings {
+interface Ratings {
   iso_3166_1: string;
   release_dates: Object[];
 }
@@ -74,33 +74,33 @@ interface Data {
   vote_count: number;
 }
 
-export interface Trending extends Data {
+interface Trending extends Data {
   adult: boolean;
   media_type: string;
 }
 
-export interface TrendingMovies extends Trending {
+interface TrendingMovies extends Trending {
   original_title: string;
   release_date?: string;
   title: string;
   video: boolean;
 }
 
-export interface TrendingSeries extends Trending {
+interface TrendingSeries extends Trending {
   first_air_date: string;
   name: string;
   origin_country: string[];
   original_name: string;
 }
 
-export interface SeriesItem extends Data {
+interface SeriesItem extends Data {
   first_air_date: string;
   name: string;
   origin_country: string[];
   original_name?: string;
 }
 
-export interface MovieItem extends Data {
+interface MovieItem extends Data {
   adult: boolean;
   original_title?: string;
   release_date?: string;
@@ -108,14 +108,14 @@ export interface MovieItem extends Data {
   video: boolean;
 }
 
-export interface Similar extends Data {
+interface Similar extends Data {
   adult: boolean;
   original_title: string;
   release_date?: string;
   title: string;
   video: boolean;
 }
-export interface Detail {
+interface Detail {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: {
@@ -153,7 +153,7 @@ export interface Detail {
   vote_count: number;
 }
 
-export interface Genre {
+interface Genre {
   id: number;
   name: string;
 }

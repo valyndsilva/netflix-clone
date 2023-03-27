@@ -2,8 +2,7 @@ import {
   ArrowBackIosOutlined,
   ArrowForwardIosOutlined,
 } from "@mui/icons-material";
-import React,{ useRef, useState } from "react";
-import {  SlideRows } from "../types/typings";
+import React, { useRef, useState } from "react";
 import ListItem from "./ListItem";
 
 interface Props {
@@ -51,7 +50,7 @@ export default function ListRow({ slideItem }: Props) {
           className="ml-[50px] flex mt-[10px] w-max transform translate-x-0 transition duration-200  ease-in z-40"
           ref={listItemRef}
         >
-          {slideItem.data?.map((item, index) => (
+          {slideItem?.data?.map((item, index) => (
             <ListItem
               index={index}
               key={index}
@@ -63,7 +62,7 @@ export default function ListRow({ slideItem }: Props) {
           ))}
         </div>
         <span
-          className="flex h-full w-[50px] bg-black/60 text-white absolute top-0 bottom-0 right-[15px] m-auto cursor-pointer items-center justify-center z-50 opacity-0 transition  group-hover:opacity-100"
+          className="flex h-full w-[50px] bg-black/60 text-white absolute top-0 bottom-0 right-[15px] m-auto cursor-pointer items-center justify-center z-50 md:opacity-0 transition  md:group-hover:opacity-100"
           onClick={() => handleClick("right")}
         >
           <ArrowForwardIosOutlined className="w-[50px]" />

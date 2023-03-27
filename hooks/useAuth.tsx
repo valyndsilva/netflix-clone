@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log(app);
+          // console.log(app);
           // Logged in...
           localStorage.setItem("user", JSON.stringify(user));
           // const uid = user.uid;
@@ -80,16 +80,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         const user = auth.currentUser;
-        console.log(auth.currentUser);
+        // console.log(auth.currentUser);
         setUser(auth.currentUser);
-        console.log(user);
+        // console.log(user);
         //  const user:User = userCredential.user;
         // setUser(user);
         updateProfile(auth.currentUser!, {
           displayName: name,
           photoURL: String(Math.floor(Math.random() * 5) + 1),
         });
-        console.log(`User ${user!.displayName} registered successfully!`);
+        // console.log(`User ${user!.displayName} registered successfully!`);
         addDoc(collection(db, "users"), {
           authProvider: "local",
           uid: user!.uid,
@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           displayName: name,
           photoURL: String(Math.floor(Math.random() * 5) + 1),
         });
-        console.log(`Document added successfully!`);
+        // console.log(`Document added successfully!`);
         router.push("/browse");
         setLoading(false);
         return user;
@@ -109,16 +109,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
-    console.log(loading);
+    // console.log(loading);
 
-    console.log("Signin in......");
+    // console.log("Signin in......");
 
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         userCredential.user && setUser(userCredential.user);
         router.push("/browse");
         setLoading(false);
-        console.log("User has signed in successfully!");
+        // console.log("User has signed in successfully!");
       })
       .catch((error) => alert(`Error: ${error.message}`))
       .finally(() => setLoading(false));

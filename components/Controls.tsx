@@ -1,8 +1,7 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { ModalContext, TmdbContext } from "../context";
 import { InfoOutlined, PlayArrow, VolumeUpOutlined } from "@mui/icons-material";
-import { MovieItem, SeriesItem } from "../types/typings";
 
 interface Props {
   item: MovieItem | SeriesItem | undefined;
